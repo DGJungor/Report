@@ -1,0 +1,9 @@
+@charset "utf8";
+body{font-family:"Microfost Yahei";background-color:#f1f2f6;font-size:14px!important;}
+ul,li,ol{list-style:none;}
+a{text-decoration:none;}
+h1,h2,h3,h4{font-weight:normal;}
+label{font-weight:normal;cursor:pointer;margin:0;}
+th{text-align:center;font-weight:normal;word-wrap:break-word}
+
+
