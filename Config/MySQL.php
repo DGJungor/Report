@@ -12,7 +12,7 @@
 
 define("HOST","localhost");//主机名
 define("USER","root");//账户
-define("PASS","root");//密码
+define("PASS","");//密码
 define("DBNAME","report");//数据库
 
 ?>

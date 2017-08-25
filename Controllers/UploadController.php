@@ -13,6 +13,7 @@ require 'App/Test.class.php';
 require_once 'App/PHPExcel.php';
 require_once 'App/PHPExcel\IOFactory.php';
 require_once 'App/PHPExcel\Reader\Excel2007.php';//excel 2007
+require_once 'Config/MySQL.php';
 
 class UploadController
 {
@@ -35,6 +36,11 @@ class UploadController
 
     }
 
+    public function PDO($)
+    {
+
+    }
+
     function Index($param)
     {
         require('View/index.php');
@@ -54,13 +60,11 @@ class UploadController
 
     public function Test()
     {
-
-
-
+        $aa = '123';
 
         require('View/test.php');
         $view = new Index();
-        $view->display();
+        $view->display($aa);
 
     }
 
@@ -81,6 +85,35 @@ class UploadController
         $uploadfile  = $this->filePath . $name;                       //上传后的文件名地址
         $result      = move_uploaded_file($this->tmpFileName, $uploadfile);          //上传到当前目录下   函数将上传的文件移动到新位置。若成功，则返回 true，否则返回 false。
 
+        if ($result) {
+            $objReader     = PHPExcel_IOFactory::createReader('Excel2007');
+            $objPHPExcel   = PHPExcel_IOFactory::load($uploadfile);
+            $sheet         = $objPHPExcel->getSheet(0);
+            $highestRow    = $sheet->getHighestRow(); // 取得总行数
+            $highestColumn = $sheet->getHighestColumn(); // 取得总列数
+
+            //循环读取excel文件,读取一条,插入一条
+            for ($j = 2; $j <= $highestRow; $j++) {
+                for ($k = 'A'; $k <= $highestColumn; $k++) {
+                    $str .= iconv("UTF-8", "UTF-8", $objPHPExcel->getActiveSheet()->getCell("$k$j")->getValue()) . '\\';//读取单元格
+                }
+                $strs = explode("\\", $str);
+//                mysql_query("set names 'gb2312'");//这就是指定数据库字符集，一般放在连接数据库后面就系了
+//                $sql = "INSERT INTO report (number,month,data_1,data_2,data_3,data_4,data_5,data_6,data_7) VALUES('" . $strs[0] . "','" . $strs[1] . "','" . $strs[2] . "','" . $strs[3] . "','" . $strs[4] . "','" . $strs[5] . "','" . $strs[6] . "','" . $strs[7] . "','" . $strs[8] . "')";
+//
+//                if (!mysql_query($sql)) {
+//                    return false;
+//                }
+//                $str = "";
+//                $p   = $strs[0];
+            }
+//            unlink($uploadfile); //删除上传的excel文件
+//            $msg = json_encode("$p");
+        } else {
+
+
+        }
+
 
         $mag = $this->tmpFileName;
         var_dump($mag);
@@ -89,6 +122,9 @@ class UploadController
         var_dump($name);
         var_dump($uploadfile);
         var_dump($result);
+        var_dump($str);
+        var_dump(json_encode($strs));
+        echo HOST;
         die();
 
 
