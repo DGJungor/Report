@@ -6,9 +6,10 @@
  * Time: 14:45
  */
 
-require_once 'App/PHPExcel.php';
-require_once 'APP/PHPExcel\IOFactory.php';
-require_once 'App/PHPExcel\Reader\Excel2007.php';//excel 2007
+//require_once 'App/PHPExcel.php';
+//require_once 'APP/PHPExcel\IOFactory.php';
+//require_once 'App/PHPExcel\Reader\Excel2007.php';//excel 2007
+require  'App/Test.class.php';
 
 class UploadController
 {
@@ -35,4 +36,32 @@ class UploadController
         $filetempname = $_FILES['file']['tmp_name'];
     }
 
+    public function Test()
+    {
+        require('View/test.php');
+        $view = new Index();
+        $t = new Test();
+
+
+        $data = $t->Index();
+        $view->display($data);
+
+    }
+
+    public function Test2()
+    {
+        require('View/test.php');
+        $view = new Index();
+        $file = $HTTP_POST_FILES['file']['name'];
+        $filetempname = $_FILES['file']['tmp_name'];
+
+        $qwe = $_FILES;
+
+        var_dump($qwe);
+        die();
+        $data = $file;
+        $view->display($data);
+    }
+
 }
+?>

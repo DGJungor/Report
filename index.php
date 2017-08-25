@@ -8,6 +8,7 @@ session_start();
 //header("Location:./Theme/Test.php");
 //header("Location:./Controllers/UploadController.php");
 
+//mvc 模式开发
 //index.php
 // get runtime controller prefix
 $c_str = $_GET['c'];
@@ -27,7 +28,7 @@ $controller = new $c_name;
 $controller->$method($param);
 // End of index.php
 
-//url:http://www.r1.com/index.php?c=Demo&a=Index&param=welcome
+//url:http://www.r2.com/index.php?c=Demo&a=Index&param=welcome
 
 
 ?>
