@@ -45,6 +45,6 @@ $filetempname = $_FILES['file']['tmp_name'];
 	}else{
 		$msg =json_encode("上传失败");
 	}
-	echo $msg;
+	return  $msg;
 
 

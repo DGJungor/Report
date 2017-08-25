@@ -27,4 +27,7 @@ $controller = new $c_name;
 $controller->$method($param);
 // End of index.php
 
+//url:http://www.r1.com/index.php?c=Demo&a=Index&param=welcome
+
+
 ?>

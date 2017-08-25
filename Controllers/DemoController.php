@@ -14,8 +14,8 @@ class DemoController
     // private $data = 'Hello furzoom!';
     function Index($param)
     {
-        require('./View/demo.php');
-        require('./Model/demo.php');
+        require('View/demo.php');
+        require('Model/demo.php');
         $model = new Model();
         $view = new Index();
         $data = $model->getData($param);
