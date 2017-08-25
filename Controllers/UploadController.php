@@ -36,10 +36,6 @@ class UploadController
 
     }
 
-    public function PDO($)
-    {
-
-    }
 
     function Index($param)
     {
@@ -106,6 +102,15 @@ class UploadController
 //                }
 //                $str = "";
 //                $p   = $strs[0];
+
+                //使用PDO将数据添加到数据库
+
+                $reportPDO = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME.';charset=utf8', DB_USER, DB_PASSWD);
+                $sql       = 'select * from report';
+                $reportPDO->query('set names utf-8');
+                $count     = $reportPDO->query("SELECT * FROM report" )->fetchAll();
+
+
             }
 //            unlink($uploadfile); //删除上传的excel文件
 //            $msg = json_encode("$p");
@@ -124,7 +129,12 @@ class UploadController
         var_dump($result);
         var_dump($str);
         var_dump(json_encode($strs));
-        echo HOST;
+        var_dump($reportPDO);
+
+        echo $count[0][5];
+        var_dump($count);
+
+
         die();
 
 
