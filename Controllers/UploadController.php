@@ -88,27 +88,40 @@ class UploadController
             $highestRow    = $sheet->getHighestRow(); // 取得总行数
             $highestColumn = $sheet->getHighestColumn(); // 取得总列数
 
+            //使用POD连接数据库
+            $reportPDO = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME.';charset=utf8', DB_USER, DB_PASSWD);
+
             //循环读取excel文件,读取一条,插入一条
             for ($j = 2; $j <= $highestRow; $j++) {
+                $str = "";
                 for ($k = 'A'; $k <= $highestColumn; $k++) {
                     $str .= iconv("UTF-8", "UTF-8", $objPHPExcel->getActiveSheet()->getCell("$k$j")->getValue()) . '\\';//读取单元格
                 }
                 $strs = explode("\\", $str);
+
+                $sql = "INSERT INTO report (number,month,data_1,data_2,data_3,data_4,data_5,data_6,data_7) VALUES('" . $strs[0] . "','" . $strs[1] . "','" . $strs[2] . "','" . $strs[3] . "','" . $strs[4] . "','" . $strs[5] . "','" . $strs[6] . "','" . $strs[7] . "','" . $strs[8] . "')";
+
+                $aa = $reportPDO->exec($sql);
+
+                var_dump($aa);
+                var_dump($sql);
+//                $sth = $reportPDO->prepare();
+
 //                mysql_query("set names 'gb2312'");//这就是指定数据库字符集，一般放在连接数据库后面就系了
 //                $sql = "INSERT INTO report (number,month,data_1,data_2,data_3,data_4,data_5,data_6,data_7) VALUES('" . $strs[0] . "','" . $strs[1] . "','" . $strs[2] . "','" . $strs[3] . "','" . $strs[4] . "','" . $strs[5] . "','" . $strs[6] . "','" . $strs[7] . "','" . $strs[8] . "')";
 //
 //                if (!mysql_query($sql)) {
 //                    return false;
 //                }
-//                $str = "";
+
 //                $p   = $strs[0];
 
                 //使用PDO将数据添加到数据库
 
-                $reportPDO = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME.';charset=utf8', DB_USER, DB_PASSWD);
-                $sql       = 'select * from report';
-                $reportPDO->query('set names utf-8');
-                $count     = $reportPDO->query("SELECT * FROM report" )->fetchAll();
+
+//                $sql       = 'select * from report';
+//                $reportPDO->query('set names utf-8');
+//                $count     = $reportPDO->query("SELECT * FROM report" )->fetchALL();
 
 
             }
@@ -121,18 +134,20 @@ class UploadController
 
 
         $mag = $this->tmpFileName;
-        var_dump($mag);
-        var_dump($this->fileMag);
-        var_dump($filename);
-        var_dump($name);
-        var_dump($uploadfile);
-        var_dump($result);
-        var_dump($str);
-        var_dump(json_encode($strs));
-        var_dump($reportPDO);
+//        var_dump($mag);
+//        var_dump($this->fileMag);
+//        var_dump($filename);
+//        var_dump($name);
+//        var_dump($uploadfile);
+//        var_dump($result);
+//        var_dump($str);
+//        var_dump(json_encode($strs));
+//        var_dump($reportPDO);
 
-        echo $count[0][5];
-        var_dump($count);
+//        echo $count[0][5];
+//        var_dump($count);
+
+
 
 
         die();
