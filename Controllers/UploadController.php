@@ -49,7 +49,7 @@ class UploadController
 
     }
 
-    public function UploadExcel()
+    public function Test2()
     {
 
     }
@@ -67,7 +67,7 @@ class UploadController
     /*
      *
      */
-    public function Test2()
+    public function UploadExcel()
     {
 
         $this->fileMag     = $_FILES;                               //获取文件信息
@@ -99,10 +99,11 @@ class UploadController
                 }
                 $strs = explode("\\", $str);
 
-                $sql = "INSERT INTO report (number,month,data_1,data_2,data_3,data_4,data_5,data_6,data_7) VALUES('" . $strs[0] . "','" . $strs[1] . "','" . $strs[2] . "','" . $strs[3] . "','" . $strs[4] . "','" . $strs[5] . "','" . $strs[6] . "','" . $strs[7] . "','" . $strs[8] . "')";
+                $sql = "INSERT INTO reports_details (number,month,data_1,data_2,data_3,data_4,data_5,data_6,data_7) VALUES('" . $strs[0] . "','" . $strs[1] . "','" . $strs[2] . "','" . $strs[3] . "','" . $strs[4] . "','" . $strs[5] . "','" . $strs[6] . "','" . $strs[7] . "','" . $strs[8] . "')";
 
                 $count = $reportPDO->exec($sql);
 
+                $reportPDO = null;
                 var_dump($count);
                 var_dump($sql);
 //                $sth = $reportPDO->prepare();
@@ -155,6 +156,13 @@ class UploadController
         $view = new Index();
         $view->display($data);
     }
+
+    //析构方法
+    function __destruct()
+    {
+
+    }
+
 
 }
 
