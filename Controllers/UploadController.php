@@ -89,7 +89,7 @@ class UploadController
             $highestColumn = $sheet->getHighestColumn(); // 取得总列数
 
             //使用POD连接数据库
-            $reportPDO = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME.';charset=utf8', DB_USER, DB_PASSWD);
+            $reportPDO = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASSWD);
 
             //循环读取excel文件,读取一条,插入一条
             for ($j = 2; $j <= $highestRow; $j++) {
@@ -101,9 +101,9 @@ class UploadController
 
                 $sql = "INSERT INTO report (number,month,data_1,data_2,data_3,data_4,data_5,data_6,data_7) VALUES('" . $strs[0] . "','" . $strs[1] . "','" . $strs[2] . "','" . $strs[3] . "','" . $strs[4] . "','" . $strs[5] . "','" . $strs[6] . "','" . $strs[7] . "','" . $strs[8] . "')";
 
-                $aa = $reportPDO->exec($sql);
+                $count = $reportPDO->exec($sql);
 
-                var_dump($aa);
+                var_dump($count);
                 var_dump($sql);
 //                $sth = $reportPDO->prepare();
 
@@ -146,8 +146,6 @@ class UploadController
 
 //        echo $count[0][5];
 //        var_dump($count);
-
-
 
 
         die();

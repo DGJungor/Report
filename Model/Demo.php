@@ -9,8 +9,8 @@
 // model/model.php
 class Model {
     private $data = array(
-        'title' => 'Hello furzoom',
-        'welcome' => 'Welcome to furzoom.com',
+        'title' => 'Hello jun',
+        'welcome' => 'Welcome to jun',
     );
     public function getData($key) {
         return $this->data[$key];

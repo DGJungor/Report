@@ -28,7 +28,7 @@ $controller = new $c_name;
 $controller->$method($param);
 // End of index.php
 
-//url:http://www.r2.com/index.php?c=Demo&a=Index&param=welcome
+//使用方法   url:http://www.r2.com/index.php?c=Demo&a=Index&param=welcome
 
 
 ?>
