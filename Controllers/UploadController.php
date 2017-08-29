@@ -128,12 +128,37 @@ class UploadController
 
 
         }
-
+        echo $this->tmpFileName = $_FILES['file']['tmp_name'];
         echo  '{ "code": 1 ,"msg": "上传失败" }';
+
+        echo  '{ "code": 1 ,"msg": "'.$this->tmpFileName = $_FILES['file']['tmp_name'].'" }';
 
 //        require('View/test.php');
 //        $view = new Index();
 //        $view->display($data);
+    }
+
+    /*
+     * 通过借口 使用异步上传 先将上传上来的Excel文件的临时路径名放入到session
+     *
+     *
+     *
+     */
+    public function  TmpName()
+    {
+
+        $_SESSION['tmpExcel'] = $this->tmpFileName = $_FILES['file']['tmp_name'];;
+//        $tmp = array( "code"=>1,'msg'=>$_SESSION['tmpExcel']);
+        if($_SESSION['tmpExcel']){
+            $tmp = array( "code"=>1,'msg'=>'上传成功');
+            $msg = json_encode($tmp);
+            echo $msg;
+        }else{
+            $tmp = array( "code"=>0,'msg'=>'上传失败');
+            $msg = json_encode($tmp);
+            echo $msg;        }
+
+
     }
 
     //析构方法

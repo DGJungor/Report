@@ -162,43 +162,42 @@ class Index
                     elem: '#choiceExcel'
                     , accept: 'file'
                     , url: 'index.php?c=Upload&a=TmpName'
-//                    , auto: false
-//                    //,multiple: true
-//                    , bindAction: '#upFile'
+                    , auto: false
+                    //,multiple: true
+                    , bindAction: '#upFile'
                     ,exts: 'xls'
                     , done: function (res) {
                         console.log(res)
-                        $('#upmag').val(1);
                     }
 
-//                    ,choose: function(obj){
-//
-//                        //将选择上传文件的隐藏状态数字改为1   表示已经选择需要上传的Excel文件
-//                        $('#upmag').val(1);
-//
-//                        //将每次选择的文件追加到文件队列
-//                        var files = obj.pushFile();
-//
-//                        //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
-//                        obj.preview(function(index, file, result){
-//                            console.log(index); //得到文件索引
-//                            console.log(file); //得到文件对象
-//                            console.log(file.name); //得到对象中的文件名
-//
-//                            $("#filename").html(file.name);
-//
-//
-////                            console.log(result); //得到文件base64编码，比如图片
-//
-//                            //这里还可以做一些 append 文件列表 DOM 的操作
-//
-//                            //obj.upload(index, file); //对上传失败的单个文件重新上传，一般在某个事件中使用
-//                            //delete files[index]; //删除列表中对应的文件，一般在某个事件中使用
-//                        });
+                    ,choose: function(obj){
+
+                        //将选择上传文件的隐藏状态数字改为1   表示已经选择需要上传的Excel文件
+                        $('#upmag').val(1);
+
+                        //将每次选择的文件追加到文件队列
+                        var files = obj.pushFile();
+
+                        //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
+                        obj.preview(function(index, file, result){
+                            console.log(index); //得到文件索引
+                            console.log(file); //得到文件对象
+                            console.log(file.name); //得到对象中的文件名
+
+                            $("#filename").html(file.name);
+
+
+//                            console.log(result); //得到文件base64编码，比如图片
+
+                            //这里还可以做一些 append 文件列表 DOM 的操作
+
+                            //obj.upload(index, file); //对上传失败的单个文件重新上传，一般在某个事件中使用
+                            //delete files[index]; //删除列表中对应的文件，一般在某个事件中使用
+                        });
 
 
 
-//                    }
+                    }
                 });
             });
 
