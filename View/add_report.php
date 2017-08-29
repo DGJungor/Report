@@ -26,14 +26,14 @@ class Index
             <!-- External CSS -->
             <link rel="stylesheet" href="./Public/layui/css/layui.css">
             <!--            <link rel="stylesheet" href="./Public/bootstrap/3.3.0/css/bootstrap.min.css">-->
-            <link rel="stylesheet" href="./Public/Common/css/base.css">
-            <link rel="stylesheet" href="./Public/Common/css/report.css">
+<!--            <link rel="stylesheet" href="./Public/Common/css/base.css">-->
+<!--            <link rel="stylesheet" href="./Public/Common/css/report.css">-->
 
             <!-- JS   -->
 <!--                        <script src="./Public/jquery/1.11.3/jquery.js"></script>-->
             <!--            <script src="./Public/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
             <!--            <script src="./Public/jquery/2.0.0/jquery.min.js"></script>-->
-            <!--    <script src="./Public/My97DatePicker/WdatePicker.js"></script>-->
+<!--                <script src="./Public/My97DatePicker/WdatePicker.js"></script>-->
             <script src="./Public/layui/layui.js"></script>
             <script src="./Public/layui/layui.all.js"></script>
 
@@ -104,7 +104,7 @@ class Index
 
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button class="layui-btn" lay-submit lay-filter="formDemo" id="upFile">立即提交</button>
+                                <button class="layui-btn" lay-submit lay-filter="formDemo" >立即提交</button>
                                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                             </div>
                     </form>
@@ -118,13 +118,7 @@ class Index
                 var form = layui.form;
 
                 form.verify({
-                    text:function (value) {
-                    if(value!=="1"){
-                        return false;
-                    }
-                }
-
-                    ,hidden:function (value) {
+                    hidden:function (value) {
                         if(value!=="1"){
                             return '你还没有选择文件!';
                         }
@@ -135,8 +129,8 @@ class Index
 
                 //监听提交
                 form.on('submit(formDemo)', function (data) {
-                    layer.msg(JSON.stringify(data.field));
-                    return false;
+//                    layer.msg(JSON.stringify(data.field));
+//                    return false;
                 });
             });
 
@@ -171,34 +165,7 @@ class Index
                         $('#upmag').val(1);
                     }
 
-//                    ,choose: function(obj){
-//
-//                        //将选择上传文件的隐藏状态数字改为1   表示已经选择需要上传的Excel文件
-//                        $('#upmag').val(1);
-//
-//                        //将每次选择的文件追加到文件队列
-//                        var files = obj.pushFile();
-//
-//                        //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
-//                        obj.preview(function(index, file, result){
-//                            console.log(index); //得到文件索引
-//                            console.log(file); //得到文件对象
-//                            console.log(file.name); //得到对象中的文件名
-//
-//                            $("#filename").html(file.name);
-//
-//
-////                            console.log(result); //得到文件base64编码，比如图片
-//
-//                            //这里还可以做一些 append 文件列表 DOM 的操作
-//
-//                            //obj.upload(index, file); //对上传失败的单个文件重新上传，一般在某个事件中使用
-//                            //delete files[index]; //删除列表中对应的文件，一般在某个事件中使用
-//                        });
 
-
-
-//                    }
                 });
             });
 
