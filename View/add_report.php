@@ -66,42 +66,42 @@ class Index
             <div class="layui-colla-item">
                 <h2 class="layui-colla-title">新建</h2>
                 <div class="layui-colla-content layui-show">
-                    <form class="layui-form" action="">
+                    <form class="layui-form" action="index.php?c=Report&a=Test1" method="post">
                         <div class="layui-form-item">
                             <label class="layui-form-label">店铺名</label>
                             <div class="layui-input-block">
-                                <input type="text" name="title" required lay-verify="required" placeholder="请输入输入店铺名"
+                                <input type="text" name="shopname" required lay-verify="required" placeholder="请输入输入店铺名"
                                        autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">店铺代码</label>
                             <div class="layui-input-block">
-                                <input type="text" name="title" required lay-verify="required" placeholder="请输入输入店铺机构代码"
+                                <input type="text" name="shopcode" required lay-verify="required" placeholder="请输入输入店铺机构代码"
                                        autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">日期</label>
                             <div class="layui-input-inline">
-                                <input type="text" class="layui-input" id="date">
+                                <input type="text" name="date" required lay-verify="required" class="layui-input" id="date">
                             </div>
                             <div class="layui-form-mid layui-word-aux">辅助文字</div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">Excel表格</label>
                             <div class="layui-input-inline">
-                                <div class="layui-upload">
-                                    <button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>
-                                    <button type="button" class="layui-btn" id="test9">开始上传</button>
+                                <div class="layui-upload" style="width: 200px">
+                                    <button type="button"  class="layui-btn layui-btn-normal" id="choiceExcel">选择文件</button>
+<!--                                    <button type="button" class="layui-btn" id="upFile">开始上传</button>-->
                                 </div>
                             </div>
-                            <div class="layui-form-mid layui-word-aux">辅助文字</div>
+                            <div class="layui-form-mid layui-word-aux"><a href="./dowFile/report.xls">点击下载报表模板文件</a></div>
                         </div>
 
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                                <button class="layui-btn" lay-submit lay-filter="formDemo" id="upFile">立即提交</button>
                                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                             </div>
                     </form>
@@ -113,6 +113,14 @@ class Index
             //表单模块
             layui.use('form', function () {
                 var form = layui.form;
+
+                form.verify({
+                    date: function(value){
+                        if(value.length < 5){
+                            return '不能为空!';
+                        }
+                    }
+                });
 
                 //监听提交
                 form.on('submit(formDemo)', function (data) {
@@ -140,15 +148,20 @@ class Index
 
                 //选完文件后不自动上传
                 upload.render({
-                    elem: '#test8'
+                    elem: '#choiceExcel'
                     , accept: 'file'
                     , url: 'index.php?c=Upload&a=UploadExcel'
                     , auto: false
                     //,multiple: true
-                    , bindAction: '#test9'
+                    , bindAction: '#upFile'
+                    ,exts: 'xls'
                     , done: function (res) {
                         console.log(res)
                     }
+                    ,choose: function(obj){
+                        //将每次选择的文件追加到文件队列
+                        var files = obj.pushFile();
+
                 });
             });
 

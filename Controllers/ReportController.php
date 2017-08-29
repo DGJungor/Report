@@ -26,4 +26,9 @@ class ReportController
         $view->display();
     }
 
+    public function Test1()
+    {
+        var_dump($_POST);
+    }
+
 }
