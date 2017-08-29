@@ -26,13 +26,13 @@ class Index
             <!-- External CSS -->
             <link rel="stylesheet" href="./Public/layui/css/layui.css">
             <!--            <link rel="stylesheet" href="./Public/bootstrap/3.3.0/css/bootstrap.min.css">-->
-            <!--            <link rel="stylesheet" href="./Public/Common/css/base.css">-->
-            <!--            <link rel="stylesheet" href="./Public/Common/css/report.css">-->
+            <link rel="stylesheet" href="./Public/Common/css/base.css">
+            <link rel="stylesheet" href="./Public/Common/css/report.css">
 
             <!-- JS   -->
-            <script src="./Public/jquery/2.0.0/jquery.js"></script>
+            <!--            <script src="./Public/jquery/2.0.0/jquery.js"></script>-->
             <!--            <script src="./Public/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
-            <script src="./Public/jquery/2.0.0/jquery.min.js"></script>
+            <!--            <script src="./Public/jquery/2.0.0/jquery.min.js"></script>-->
             <!--    <script src="./Public/My97DatePicker/WdatePicker.js"></script>-->
             <script src="./Public/layui/layui.js"></script>
 
@@ -75,68 +75,42 @@ class Index
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <label class="layui-form-label">密码框</label>
-                            <div class="layui-input-inline">
-                                <input type="password" name="password" required lay-verify="required"
-                                       placeholder="请输入密码"
+                            <label class="layui-form-label">店铺代码</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="title" required lay-verify="required" placeholder="请输入输入店铺机构代码"
                                        autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">日期</label>
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" id="date">
                             </div>
                             <div class="layui-form-mid layui-word-aux">辅助文字</div>
                         </div>
                         <div class="layui-form-item">
-                            <label class="layui-form-label">选择框</label>
-                            <div class="layui-input-block">
-                                <select name="city" lay-verify="required">
-                                    <option value=""></option>
-                                    <option value="0">北京</option>
-                                    <option value="1">上海</option>
-                                    <option value="2">广州</option>
-                                    <option value="3">深圳</option>
-                                    <option value="4">杭州</option>
-                                </select>
+                            <label class="layui-form-label">Excel表格</label>
+                            <div class="layui-input-inline">
+                                <div class="layui-upload">
+                                    <button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>
+                                    <button type="button" class="layui-btn" id="test9">开始上传</button>
+                                </div>
                             </div>
+                            <div class="layui-form-mid layui-word-aux">辅助文字</div>
                         </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">复选框</label>
-                            <div class="layui-input-block">
-                                <input type="checkbox" name="like[write]" title="写作">
-                                <input type="checkbox" name="like[read]" title="阅读" checked>
-                                <input type="checkbox" name="like[dai]" title="发呆">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">开关</label>
-                            <div class="layui-input-block">
-                                <input type="checkbox" name="switch" lay-skin="switch">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">单选框</label>
-                            <div class="layui-input-block">
-                                <input type="radio" name="sex" value="男" title="男">
-                                <input type="radio" name="sex" value="女" title="女" checked>
-                            </div>
-                        </div>
-                        <div class="layui-form-item layui-form-text">
-                            <label class="layui-form-label">文本域</label>
-                            <div class="layui-input-block">
-                                <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
-                            </div>
-                        </div>
+
                         <div class="layui-form-item">
                             <div class="layui-input-block">
                                 <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
                                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                             </div>
-                        </div>
                     </form>
                 </div>
             </div>
         </div>
 
-
         <script>
-            //Demo
+            //表单模块
             layui.use('form', function () {
                 var form = layui.form;
 
@@ -146,6 +120,39 @@ class Index
                     return false;
                 });
             });
+
+            //日期模块
+            layui.use('laydate', function () {
+                var laydate = layui.laydate;
+
+                //执行一个laydate实例
+                laydate.render({
+                    elem: '#date' //指定元素
+                    , type: 'month'
+                    , format: 'yyyy-MM'
+                });
+            });
+
+            //文件上传模块
+            layui.use('upload', function () {
+                var $ = layui.jquery
+                    , upload = layui.upload;
+
+                //选完文件后不自动上传
+                upload.render({
+                    elem: '#test8'
+                    , accept: 'file'
+                    , url: 'index.php?c=Upload&a=UploadExcel'
+                    , auto: false
+                    //,multiple: true
+                    , bindAction: '#test9'
+                    , done: function (res) {
+                        console.log(res)
+                    }
+                });
+            });
+
+
         </script>
         </body>
         </html>

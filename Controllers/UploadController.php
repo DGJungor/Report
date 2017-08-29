@@ -149,12 +149,20 @@ class UploadController
 //        var_dump($count);
 
 
-        die();
+        $r = '{
+        "code": 0
+  ,"msg": ""
+  ,"data": {
+            "src": "http://cdn.layui.com/123.jpg"
+  }
+}   ';
+        return $r;
+//        die();
 
-
-        require('View/test.php');
-        $view = new Index();
-        $view->display($data);
+//
+//        require('View/test.php');
+//        $view = new Index();
+//        $view->display($data);
     }
 
     //析构方法
