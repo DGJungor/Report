@@ -30,11 +30,12 @@ class Index
             <link rel="stylesheet" href="./Public/Common/css/report.css">
 
             <!-- JS   -->
-            <!--            <script src="./Public/jquery/2.0.0/jquery.js"></script>-->
+<!--                        <script src="./Public/jquery/1.11.3/jquery.js"></script>-->
             <!--            <script src="./Public/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
             <!--            <script src="./Public/jquery/2.0.0/jquery.min.js"></script>-->
             <!--    <script src="./Public/My97DatePicker/WdatePicker.js"></script>-->
             <script src="./Public/layui/layui.js"></script>
+            <script src="./Public/layui/layui.all.js"></script>
 
 
             <!--  style  -->
@@ -70,21 +71,21 @@ class Index
                         <div class="layui-form-item">
                             <label class="layui-form-label">店铺名</label>
                             <div class="layui-input-block">
-                                <input type="text" name="shopname" required lay-verify="required" placeholder="请输入输入店铺名"
+                                <input type="text" name="shopname"  lay-verify="required" placeholder="请输入输入店铺名"
                                        autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">店铺代码</label>
                             <div class="layui-input-block">
-                                <input type="text" name="shopcode" required lay-verify="required" placeholder="请输入输入店铺机构代码"
+                                <input type="text" name="shopcode"  lay-verify="required" placeholder="请输入输入店铺机构代码"
                                        autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">日期</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="date" required lay-verify="required" class="layui-input" id="date">
+                                <input type="text" name="date"  lay-verify="date" class="layui-input" id="date">
                             </div>
                             <div class="layui-form-mid layui-word-aux">辅助文字</div>
                         </div>
@@ -92,8 +93,10 @@ class Index
                             <label class="layui-form-label">Excel表格</label>
                             <div class="layui-input-inline">
                                 <div class="layui-upload" style="width: 200px">
+                                    <input type="hidden"  lay-verify="hidden" name="upmag" id="upmag" value="" >
                                     <button type="button"  class="layui-btn layui-btn-normal" id="choiceExcel">选择文件</button>
 <!--                                    <button type="button" class="layui-btn" id="upFile">开始上传</button>-->
+                                    <span class="layui-inline layui-upload-choose">11111</span>
                                 </div>
                             </div>
                             <div class="layui-form-mid layui-word-aux"><a href="./dowFile/report.xls">点击下载报表模板文件</a></div>
@@ -115,12 +118,14 @@ class Index
                 var form = layui.form;
 
                 form.verify({
-                    date: function(value){
-                        if(value.length < 5){
-                            return '不能为空!';
+                    hidden:function (value) {
+                        if(value!==1){
+                            return '你还没有选择文件!';
                         }
                     }
+
                 });
+
 
                 //监听提交
                 form.on('submit(formDemo)', function (data) {
@@ -158,10 +163,28 @@ class Index
                     , done: function (res) {
                         console.log(res)
                     }
+
                     ,choose: function(obj){
+
+                        //将选择上传文件的隐藏状态数字改为1   表示已经选择需要上传的Excel文件
+                        $('#upmag').val('1');
+
                         //将每次选择的文件追加到文件队列
                         var files = obj.pushFile();
 
+                        //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
+                        obj.preview(function(index, file, result){
+                            console.log(index); //得到文件索引
+                            console.log(file); //得到文件对象
+                            console.log(file.name); //得到对象中的文件名  
+//                            console.log(result); //得到文件base64编码，比如图片
+
+                            //这里还可以做一些 append 文件列表 DOM 的操作
+
+                            //obj.upload(index, file); //对上传失败的单个文件重新上传，一般在某个事件中使用
+                            //delete files[index]; //删除列表中对应的文件，一般在某个事件中使用
+                        });
+                    }
                 });
             });
 
@@ -175,3 +198,5 @@ class Index
 }
 
 ?>
+
+
