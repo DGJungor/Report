@@ -29,6 +29,7 @@ class ReportController
     public function Test1()
     {
         var_dump($_POST);
+        var_dump($_SESSION);
     }
 
 }

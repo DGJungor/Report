@@ -46,8 +46,8 @@ class Index {
 
 
 <ul class="layui-nav" lay-filter="">
-    <li class="layui-nav-item layui-this"><a href="">店铺收发表</a></li>
-    <li class="layui-nav-item "><a href="">新建</a></li>
+    <li class="layui-nav-item layui-this"><a href="http://www.r2.com/index.php?c=Report&a=Index">店铺收发表</a></li>
+    <li class="layui-nav-item "><a href="index.php?c=Report&a=BuildReport">新建</a></li>
 <!--    <li class="layui-nav-item">-->
 <!--        <a href="javascript:;">解决方案</a>-->
 <!--        <dl class="layui-nav-child"> <!-- 二级菜单 -->-->

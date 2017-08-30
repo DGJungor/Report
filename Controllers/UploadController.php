@@ -30,6 +30,16 @@ class UploadController
 //    private $errorNum = 0;             //错误号
 //    private $errorMess="";             //错误报告消息
 
+    public function Test()
+    {
+        $aa = 123;
+
+        require('View/test.php');
+        $view = new Index();
+        $view->display($aa);
+
+    }
+
     public function __construct()
     {
 
@@ -49,41 +59,13 @@ class UploadController
 
     }
 
-    public function Test2()
-    {
-
-    }
-
-    public function Test()
-    {
-        $aa = 123;
-
-        require('View/test.php');
-        $view = new Index();
-        $view->display($aa);
-
-    }
-
     /*
      *
      */
-    public function UploadExcel()
+    public function create()
     {
-
-        $this->fileMag     = $_FILES;                               //获取文件信息
-        $this->tmpFileName = $_FILES['file']['tmp_name'];           //获取临时文件名
-        $this->originName  = $_FILES['file']['name'];               //获取源文件名
-        $time              = date("Y-m-d-H-i-s");           //获取当前时间
-
-        $filename    = explode(".", $this->originName);
-        $filename[0] = $time;                                         //取文件名t替换
-        $name        = implode(".", $filename);                 //上传后的文件名
-        $uploadfile  = $this->filePath . $name;                       //上传后的文件名地址
-        $result      = move_uploaded_file($this->tmpFileName, $uploadfile);          //上传到当前目录下   函数将上传的文件移动到新位置。若成功，则返回 true，否则返回 false。
-
-        if ($result) {
             $objReader     = PHPExcel_IOFactory::createReader('Excel2007');
-            $objPHPExcel   = PHPExcel_IOFactory::load($uploadfile);
+            $objPHPExcel   = PHPExcel_IOFactory::load($_SESSION['tmpExcel']['uploadfile']);
             $sheet         = $objPHPExcel->getSheet(0);
             $highestRow    = $sheet->getHighestRow(); // 取得总行数
             $highestColumn = $sheet->getHighestColumn(); // 取得总列数
@@ -124,14 +106,8 @@ class UploadController
 
             //关闭PDO数据库连接
             $reportPDO = null;
-        } else {
 
 
-        }
-        echo $this->tmpFileName = $_FILES['file']['tmp_name'];
-        echo  '{ "code": 1 ,"msg": "上传失败" }';
-
-        echo  '{ "code": 1 ,"msg": "'.$this->tmpFileName = $_FILES['file']['tmp_name'].'" }';
 
 //        require('View/test.php');
 //        $view = new Index();
@@ -144,19 +120,29 @@ class UploadController
      *
      *
      */
-    public function  TmpName()
+    public function TmpExcel()
     {
+        $this->fileMag     = $_FILES;                               //获取文件信息
+        $this->tmpFileName = $_FILES['file']['tmp_name'];           //获取临时文件名
+        $this->originName  = $_FILES['file']['name'];               //获取源文件名
+        $time              = date("Y-m-d-H-i-s");           //获取当前时间
 
-        $_SESSION['tmpExcel'] = $this->tmpFileName = $_FILES['file']['tmp_name'];;
-//        $tmp = array( "code"=>1,'msg'=>$_SESSION['tmpExcel']);
-        if($_SESSION['tmpExcel']){
-            $tmp = array( "code"=>1,'msg'=>'上传成功');
+        $filename    = explode(".", $this->originName);
+        $filename[0] = $time;                                         //取文件名t替换
+        $name        = implode(".", $filename);                 //上传后的文件名
+        $uploadfile  = $this->filePath . $name;                       //上传后的文件名地址
+        $result      = move_uploaded_file($this->tmpFileName, $uploadfile);          //上传到当前目录下   函数将上传的文件移动到新位置。若成功，则返回 true，否则返回 false。
+
+        if ($result){
+            $_SESSION['tmpExcel']['uploadfile'] = $uploadfile;
+            $tmp = array("code" => 1, 'msg' => '上传成功', "filename" => $name);
             $msg = json_encode($tmp);
             echo $msg;
-        }else{
-            $tmp = array( "code"=>0,'msg'=>'上传失败');
+        } else {
+            $tmp = array("code" => 0, 'msg' => '上传失败');
             $msg = json_encode($tmp);
-            echo $msg;        }
+            echo $msg;
+        }
 
 
     }

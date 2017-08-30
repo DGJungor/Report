@@ -50,8 +50,8 @@ class Index
 
 
         <ul class="layui-nav" lay-filter="">
-            <li class="layui-nav-item "><a href="">店铺收发表</a></li>
-            <li class="layui-nav-item layui-this"><a href="">新建</a></li>
+            <li class="layui-nav-item "><a href="http://www.r2.com/index.php?c=Report&a=Index">店铺收发表</a></li>
+            <li class="layui-nav-item layui-this"><a href="index.php?c=Report&a=BuildReport"">新建</a></li>
             <!--    <li class="layui-nav-item">-->
             <!--        <a href="javascript:;">解决方案</a>-->
             <!--        <dl class="layui-nav-child"> <!-- 二级菜单 -->-->
@@ -67,7 +67,7 @@ class Index
             <div class="layui-colla-item">
                 <h2 class="layui-colla-title">新建</h2>
                 <div class="layui-colla-content layui-show">
-                    <form class="layui-form" action="index.php?c=Report&a=Test1" method="post">
+                    <form class="layui-form" action="index.php?c=Upload&a=create" method="post">
                         <div class="layui-form-item">
                             <label class="layui-form-label">店铺名</label>
                             <div class="layui-input-block">
@@ -155,20 +155,33 @@ class Index
                 upload.render({
                     elem: '#choiceExcel'
                     , accept: 'file'
-                    , url: 'index.php?c=Upload&a=TmpName'
+                    , url: 'index.php?c=Upload&a=TmpExcel'
 //                    , auto: false
 //                    //,multiple: true
 //                    , bindAction: '#upFile'
                     ,exts: 'xls'
                     , done: function (res) {
                         console.log(res)
-                        $('#upmag').val(1);
+                        if(res.code==1){
+                            $('#upmag').val(1);
+                            $('#filename').html(res.filename);
+                        }else {
+                            $('#filename').html("上传失败,请重新上传");
+                        }
+
                     }
 
 
                 });
             });
 
+
+            //注意：导航 依赖 element 模块，否则无法进行功能性操作
+            layui.use('element', function(){
+                var element = layui.element;
+
+                //…
+            });
 
         </script>
         </body>
