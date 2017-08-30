@@ -64,12 +64,11 @@ class UploadController
      */
     public function create()
     {
-
         //测试数据
         var_dump(date('Y-m-d H:i:s'));
         var_dump($_POST);
-
-
+        var_dump($_SESSION);
+        
         $objReader     = PHPExcel_IOFactory::createReader('Excel2007');
         $objPHPExcel   = PHPExcel_IOFactory::load($_SESSION['tmpExcel']['uploadfile']);
         $sheet         = $objPHPExcel->getSheet(0);
@@ -80,43 +79,58 @@ class UploadController
         //使用POD连接数据库
         $reportPDO = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASSWD);
 
-        //开启事务处理
-//        $reportPDO->beginTransaction();
+        try {
+            //开启事务处理
+            $reportPDO->beginTransaction();
 
-//        /* 通过数组值向预处理语句传递值 */
-//        $sql = 'SELECT name, colour, calories
-//    FROM fruit
-//    WHERE calories < :calories AND colour = :colour';
-//        $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-//        $sth->execute(array(':calories' => 150, ':colour' => 'red'));
-//        $red = $sth->fetchAll();
-//        $sth->execute(array(':calories' => 175, ':colour' => 'yellow'));
-//        $yellow = $sth->fetchAll();
+            //添加数据到数据库报表关联表中
+            $sql = 'INSERT INTO reports(shop_name,shop_code,date,add_time) VALUE(:shop_name,:shop_code,:date,:add_time)';
+            $sth = $reportPDO->prepare($sql);
+            $sth->execute(array(':shop_name' => $_POST['shopname'], 'shop_code' => $_POST['shopcode'], ':date' => $_POST['date'], ':add_time' => $time));
+            $lastID = $reportPDO->lastInsertId();
+            if (!$lastID)
+                throw new PDOException('报表关联表添加失败');
 
-        //添加数据到数据库报表关联表中
-//        $sql = 'INSERT INTO reports(add_time,date,shop_name,shop_code) VALUE(:add_time,:date,:shop_name,:shop_code)';
-        $sql = 'INSERT INTO reports(shop_name,shop_code,date,add_time) VALUE(:shop_name,:shop_code,:date,:add_time)';
-        $sth = $reportPDO->prepare($sql);
-//        $sth->execute(array(':add_time' => $time,':date' => $_POST['date'],':shop_name'=>$_POST['shopname'],':shop_code'=>$_POST['shopcode']));
-        $sth->execute(array(':shop_name'=>$_POST['shopname'],'shop_code'=>$_POST['shopcode'],':date'=>$_POST['date'],':add_time'=>$time));
-        $aa = $reportPDO->lastInsertId();
-        var_dump($aa);
-//        $reportPDO->beginTransaction();
-        die();
+            //循环读取excel文件,读取一条,插入一条
+            for ($j = 2; $j <= $highestRow; $j++) {
+                $str = "";
+                for ($k = 'A'; $k <= $highestColumn; $k++) {
+                    $str .= iconv("UTF-8", "UTF-8", $objPHPExcel->getActiveSheet()->getCell("$k$j")->getValue()) . '\\';//读取单元格
+                }
+                $strs = explode("\\", $str);
 
-
-
-        //循环读取excel文件,读取一条,插入一条
-        for ($j = 2; $j <= $highestRow; $j++) {
-            $str = "";
-            for ($k = 'A'; $k <= $highestColumn; $k++) {
-                $str .= iconv("UTF-8", "UTF-8", $objPHPExcel->getActiveSheet()->getCell("$k$j")->getValue()) . '\\';//读取单元格
+                //将Excel行数据 添加到数据库 rep_details_goods表中
+                $sql           = "INSERT INTO rep_details_goods(rid,in_id,in_name,in_num,out_id,out_name,out_num,abs) VALUE (:rid,:in_id,:in_name,:in_num,:out_id,:out_name,:out_num,:abs)";
+                $sth           = $reportPDO->prepare($sql);
+                $affected_rows = $sth->execute(array(
+                    ':rid'      => $lastID,
+                    ':in_id'    => $strs[3],
+                    ':in_name'  => $strs[4],
+                    ':in_num'   => $strs[5],
+                    ':out_id'   => $strs[6],
+                    ':out_name' => $strs[7],
+                    ':out_num'  => $strs[8],
+                    ':abs'      => $strs[2]
+                ));
+                if (!$affected_rows)
+                    throw new PDOException('报表关联表添加失败');
             }
-            $strs = explode("\\", $str);
 
-            $sql = "INSERT INTO reports_details (number,month,data_1,data_2,data_3,data_4,data_5,data_6,data_7) VALUES('" . $strs[0] . "','" . $strs[1] . "','" . $strs[2] . "','" . $strs[3] . "','" . $strs[4] . "','" . $strs[5] . "','" . $strs[6] . "','" . $strs[7] . "','" . $strs[8] . "')";
+            //事务提交
+            $reportPDO->commit();
+        } catch (PDOException $e) {
 
-            $count = $reportPDO->exec($sql);
+            //报错 事务回滚
+            echo $e->getMessage();
+            $reportPDO->rollBack();
+        }
+//
+//        var_dump($highestRow);
+//        var_dump($highestColumn);
+//        var_dump($objPHPExcel);
+
+
+//            $count = $reportPDO->exec($sql);
 
 //                $reportPDO = '';
 //                var_dump($count);
@@ -125,23 +139,19 @@ class UploadController
 
 //                $p   = $strs[0];
 
-            //使用PDO将数据添加到数据库
+        //使用PDO将数据添加到数据库
 
 
 //                $sql       = 'select * from report';
 //                $reportPDO->query('set names utf-8');
 //                $count     = $reportPDO->query("SELECT * FROM report" )->fetchALL();
 
+//            var_dump($str);
+//            var_dump($strs);
+//            var_dump($count);
 
-        }
 //            unlink($uploadfile); //删除上传的excel文件
 
-
-        //提交事务
-        $reportPDO->beginTransaction();
-//
-//        //事务回滚
-//        $reportPDO->rollBack();
 
         //关闭PDO数据库连接
         $reportPDO = null;
