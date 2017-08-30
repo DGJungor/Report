@@ -6,9 +6,7 @@
  * Time: 14:45
  */
 
-//require_once 'App/PHPExcel.php';
-//require_once 'APP/PHPExcel\IOFactory.php';
-//require_once 'App/PHPExcel\Reader\Excel2007.php';//excel 2007
+
 require 'App/Test.class.php';
 require_once 'App/PHPExcel.php';
 require_once 'App/PHPExcel\IOFactory.php';
@@ -30,32 +28,20 @@ class UploadController
 //    private $errorNum = 0;             //错误号
 //    private $errorMess="";             //错误报告消息
 
+    //测试用的控制器
     public function Test()
     {
-        $aa = 123;
+        $data = "";
 
         require('View/test.php');
         $view = new Index();
-        $view->display($aa);
+        $view->display($data);
 
     }
 
     public function __construct()
     {
 
-
-    }
-
-
-    function Index($param)
-    {
-        require('View/index.php');
-//        require('Model/demo.php');
-        $view = new Index();
-//        $data = $model->getData($param);
-
-        $data = 123;
-        $view->display($data);
 
     }
 
@@ -68,7 +54,7 @@ class UploadController
         var_dump(date('Y-m-d H:i:s'));
         var_dump($_POST);
         var_dump($_SESSION);
-        
+
         $objReader     = PHPExcel_IOFactory::createReader('Excel2007');
         $objPHPExcel   = PHPExcel_IOFactory::load($_SESSION['tmpExcel']['uploadfile']);
         $sheet         = $objPHPExcel->getSheet(0);
@@ -88,6 +74,7 @@ class UploadController
             $sth = $reportPDO->prepare($sql);
             $sth->execute(array(':shop_name' => $_POST['shopname'], 'shop_code' => $_POST['shopcode'], ':date' => $_POST['date'], ':add_time' => $time));
             $lastID = $reportPDO->lastInsertId();
+            //当添加数据库是出错 则抛出异常
             if (!$lastID)
                 throw new PDOException('报表关联表添加失败');
 
@@ -112,6 +99,8 @@ class UploadController
                     ':out_num'  => $strs[8],
                     ':abs'      => $strs[2]
                 ));
+
+                //若果添加数据库出错  则抛出异常
                 if (!$affected_rows)
                     throw new PDOException('报表关联表添加失败');
             }
@@ -120,10 +109,23 @@ class UploadController
             $reportPDO->commit();
         } catch (PDOException $e) {
 
-            //报错 事务回滚
+            //当抛出异常时  事务回滚
             echo $e->getMessage();
             $reportPDO->rollBack();
         }
+        //关闭PDO数据库连接
+        $reportPDO = null;
+
+        //跳转回到显示页面
+        Header("Location: /index.php?c=Report&a=Index");
+
+        //清除上传临时上传文件夹下的所有xls文件
+        $this->delFile("./upFile/", "xls");
+
+        //删除上传的excel文件
+//        unlink($_SESSION['tmpExcel']['uploadfile']);
+
+
 //
 //        var_dump($highestRow);
 //        var_dump($highestColumn);
@@ -153,9 +155,6 @@ class UploadController
 //            unlink($uploadfile); //删除上传的excel文件
 
 
-        //关闭PDO数据库连接
-        $reportPDO = null;
-
         //输出到视图
 //        require('View/test.php');
 //        $view = new Index();
@@ -163,7 +162,7 @@ class UploadController
     }
 
     /*
-     * 通过借口 使用异步上传 先将上传上来的Excel文件的临时路径名放入到session
+     * 通过接口 使用异步上传 先将上传上来的Excel文件的临时路径名放入到session
      *
      *
      *
@@ -183,7 +182,7 @@ class UploadController
 
         if ($result) {
             $_SESSION['tmpExcel']['uploadfile'] = $uploadfile;
-            $tmp                                = array("code" => 1, 'msg' => '上传成功', "filename" => $name);
+            $tmp                                = array("code" => 1, 'msg' => '上传成功', "filename" => $this->originName);
             $msg                                = json_encode($tmp);
             echo $msg;
         } else {
@@ -193,6 +192,49 @@ class UploadController
         }
 
 
+    }
+
+
+    /*
+     *
+     * 删除指定目录中的所有目录及文件（或者指定文件）
+     * 可扩展增加一些选项（如是否删除原目录等）
+     * 删除文件敏感操作谨慎使用
+     * @param $dir 目录路径
+     * @param array $file_type指定文件类型
+     */
+    private function delFile($dir, $file_type = '')
+    {
+        if (is_dir($dir)) {
+            $files = scandir($dir);
+            //打开目录 //列出目录中的所有文件并去掉 . 和 ..
+            foreach ($files as $filename) {
+                if ($filename != '.' && $filename != '..') {
+                    if (!is_dir($dir . '/' . $filename)) {
+                        if (empty($file_type)) {
+                            unlink($dir . '/' . $filename);
+                        } else {
+                            if (is_array($file_type)) {
+                                //正则匹配指定文件
+                                if (preg_match($file_type[0], $filename)) {
+                                    unlink($dir . '/' . $filename);
+                                }
+                            } else {
+                                //指定包含某些字符串的文件
+                                if (false != stristr($filename, $file_type)) {
+                                    unlink($dir . '/' . $filename);
+                                }
+                            }
+                        }
+                    } else {
+                        delFile($dir . '/' . $filename);
+                        rmdir($dir . '/' . $filename);
+                    }
+                }
+            }
+        } else {
+            if (file_exists($dir)) unlink($dir);
+        }
     }
 
     //析构方法

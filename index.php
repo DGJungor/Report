@@ -5,12 +5,6 @@ session_start();
 //设置为中国时区
 date_default_timezone_set('PRC');
 
-
-
-//header("Location:./Theme/Report.php");
-//header("Location:./Theme/Test.php");
-//header("Location:./Controllers/UploadController.php");
-
 //mvc 模式开发
 //index.php
 // get runtime controller prefix
