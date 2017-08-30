@@ -1,6 +1,9 @@
 <?php
+//开启session
 session_start();
 
+//设置为中国时区
+date_default_timezone_set('PRC');
 
 
 
