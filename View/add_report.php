@@ -26,20 +26,24 @@ class Index
             <!-- External CSS -->
             <link rel="stylesheet" href="./Public/layui/css/layui.css">
             <!--            <link rel="stylesheet" href="./Public/bootstrap/3.3.0/css/bootstrap.min.css">-->
-<!--            <link rel="stylesheet" href="./Public/Common/css/base.css">-->
-<!--            <link rel="stylesheet" href="./Public/Common/css/report.css">-->
+            <!--            <link rel="stylesheet" href="./Public/Common/css/base.css">-->
+            <!--            <link rel="stylesheet" href="./Public/Common/css/report.css">-->
 
             <!-- JS   -->
-<!--                        <script src="./Public/jquery/1.11.3/jquery.js"></script>-->
+            <script src="./Public/jquery/1.11.3/jquery.js"></script>
             <!--            <script src="./Public/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
             <!--            <script src="./Public/jquery/2.0.0/jquery.min.js"></script>-->
-<!--                <script src="./Public/My97DatePicker/WdatePicker.js"></script>-->
+            <!--                <script src="./Public/My97DatePicker/WdatePicker.js"></script>-->
             <script src="./Public/layui/layui.js"></script>
             <script src="./Public/layui/layui.all.js"></script>
 
 
             <!--  style  -->
-
+            <style>
+                body {
+                    margin: 10px;
+                }
+            </style>
 
             <!-- script   -->
             <script>
@@ -71,21 +75,21 @@ class Index
                         <div class="layui-form-item">
                             <label class="layui-form-label">店铺名</label>
                             <div class="layui-input-block">
-                                <input type="text" name="shopname"  lay-verify="required|text" placeholder="请输入输入店铺名"
+                                <input type="text" name="shopname" lay-verify="required|text" placeholder="请输入输入店铺名"
                                        autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">店铺代码</label>
                             <div class="layui-input-block">
-                                <input type="text" name="shopcode"  lay-verify="required" placeholder="请输入输入店铺机构代码"
+                                <input type="text" name="shopcode" lay-verify="required" placeholder="请输入输入店铺机构代码"
                                        autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">日期</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="date"  lay-verify="date" class="layui-input" id="date">
+                                <input type="text" name="date" lay-verify="date" class="layui-input" id="date">
                             </div>
                             <div class="layui-form-mid layui-word-aux">辅助文字</div>
                         </div>
@@ -93,18 +97,20 @@ class Index
                             <label class="layui-form-label">Excel表格</label>
                             <div class="layui-input-inline">
                                 <div class="layui-upload" style="width: 200px">
-                                    <input type="hidden"  lay-verify="hidden" name="upmag" id="upmag" value="" >
-                                    <button type="button"  class="layui-btn layui-btn-normal" id="choiceExcel">选择文件</button>
-<!--                                    <button type="button" class="layui-btn" id="upFile">开始上传</button>-->
+                                    <input type="hidden" lay-verify="hidden" name="upmag" id="upmag" value="">
+                                    <button type="button" class="layui-btn layui-btn-normal" id="choiceExcel">选择文件
+                                    </button>
+                                    <!--                                    <button type="button" class="layui-btn" id="upFile">开始上传</button>-->
                                     <span class="layui-inline " id="filename"></span>
                                 </div>
                             </div>
-                            <div class="layui-form-mid layui-word-aux"><a href="./dowFile/report.xls">点击下载报表模板文件</a></div>
+                            <div class="layui-form-mid layui-word-aux"><a href="./dowFile/report.xls">点击下载报表模板文件</a>
+                            </div>
                         </div>
 
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button class="layui-btn" lay-submit lay-filter="formDemo" >立即提交</button>
+                                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
                                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                             </div>
                     </form>
@@ -118,8 +124,8 @@ class Index
                 var form = layui.form;
 
                 form.verify({
-                    hidden:function (value) {
-                        if(value!=="1"){
+                    hidden: function (value) {
+                        if (value !== "1") {
                             return '你还没有选择文件!';
                         }
                     }
@@ -129,8 +135,25 @@ class Index
 
                 //监听提交
                 form.on('submit(formDemo)', function (data) {
-//                    layer.msg(JSON.stringify(data.field));
-//                    return false;
+
+
+
+//
+//                    $.ajax({
+//                        url: "index.php?c=Upload&a=create",
+////                        data: options.param,
+//                        type: "post",
+//                        dataType: "json",
+//                        success: function (data) {
+//                         },
+//                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+//                        },
+//                        beforeSend: function () {
+//                        },
+//                        complete: function () {
+//                        }
+//                    });
+//                    return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可
                 });
             });
 
@@ -148,6 +171,7 @@ class Index
 
             //文件上传模块
             layui.use('upload', function () {
+
                 var $ = layui.jquery
                     , upload = layui.upload;
 
@@ -159,14 +183,17 @@ class Index
 //                    , auto: false
 //                    //,multiple: true
 //                    , bindAction: '#upFile'
-                    ,exts: 'xls'
+                    , exts: 'xls'
                     , done: function (res) {
                         console.log(res)
-                        if(res.code==1){
+                        if (res.code == 1) {
                             $('#upmag').val(1);
                             $('#filename').html(res.filename);
-                        }else {
+                            layer.msg('上传成功');
+                        } else {
                             $('#filename').html("上传失败,请重新上传");
+                            layer.msg('上传失败,请重新上传');
+
                         }
 
                     }
@@ -177,7 +204,7 @@ class Index
 
 
             //注意：导航 依赖 element 模块，否则无法进行功能性操作
-            layui.use('element', function(){
+            layui.use('element', function () {
                 var element = layui.element;
 
                 //…

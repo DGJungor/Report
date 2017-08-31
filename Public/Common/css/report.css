@@ -1,9 +1,2 @@
 @charset 'utf8';
-.containerd{padding:15px;margin-top:65px;}
-.layui-table th{text-align:center;}
-.layui-table td, .layui-table th{white-space:nowrap;}
-input[type="text"]{border:none;height:35px;padding:0 2px;width:100%;}
-.title h2{text-align:center;font-size:24px;padding:20px 0;}
-.left{}
-.bnone,.bnonee{padding:0!important;}
-.bnone input{background:#714563;color:#fff;}
+body{margin: 10px;}
