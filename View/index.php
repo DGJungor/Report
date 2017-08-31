@@ -132,8 +132,8 @@ layui.use('table', function(){
 //        }]
         , url: './index.php?c=Report&a=SelectRep'
         ,request: {
-            pageName: 'curr' //页码的参数名称，默认：page
-            ,limitName: 'nums' //每页数据量的参数名，默认：limit
+            pageName: 'page' //页码的参数名称，默认：page
+            ,limitName: 'limit' //每页数据量的参数名，默认：limit
         }
         ,height: 272
         ,cols: [[ //标题栏
