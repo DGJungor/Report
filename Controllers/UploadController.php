@@ -70,9 +70,15 @@ class UploadController
             $reportPDO->beginTransaction();
 
             //添加数据到数据库报表关联表中
-            $sql = 'INSERT INTO reports(shop_name,shop_code,date,add_time) VALUE(:shop_name,:shop_code,:date,:add_time)';
+            $sql = 'INSERT INTO reports(shop_name,shop_code,date,add_time,modify_time) VALUE(:shop_name,:shop_code,:date,:add_time,:modify_time)';
             $sth = $reportPDO->prepare($sql);
-            $sth->execute(array(':shop_name' => $_POST['shopname'], 'shop_code' => $_POST['shopcode'], ':date' => $_POST['date'], ':add_time' => $time));
+            $sth->execute(array(
+                ':shop_name'   => $_POST['shopname'],
+                'shop_code'    => $_POST['shopcode'],
+                ':date'        => $_POST['date'],
+                ':add_time'    => $time,
+                ':modify_time' => $time
+            ));
             $lastID = $reportPDO->lastInsertId();
             //当添加数据库是出错 则抛出异常
             if (!$lastID)
