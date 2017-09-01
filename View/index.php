@@ -38,12 +38,12 @@ class Index
             <!--    <script src="./Public/jquery/2.0.0/jquery.min.js"></script>-->
             <!--    <script src="./Public/My97DatePicker/WdatePicker.js"></script>-->
 
-<!--                                    <script src="./Public/jquery/1.11.3/jquery.js"></script>-->
+            <!--                                    <script src="./Public/jquery/1.11.3/jquery.js"></script>-->
             <!--            <script src="//res.layui.com/layui/dist/layui.js?t=1504112998306" media="all"></script>-->
-                        <script src="./Public/layui/layui.all.js"></script>
-<!--            <script src="./Public/layui/layui.js?t=1504112998306" media="all"></script>-->
-<!--                        <script src="./Public/layui/layui.js"></script>-->
-<!--                        <script src="//res.layui.com/layui/dist/layui.js?t=1504112998306"></script>-->
+            <script src="./Public/layui/layui.all.js"></script>
+            <!--            <script src="./Public/layui/layui.js?t=1504112998306" media="all"></script>-->
+            <!--                        <script src="./Public/layui/layui.js"></script>-->
+            <!--                        <script src="//res.layui.com/layui/dist/layui.js?t=1504112998306"></script>-->
 
 
             <!--  style  -->
@@ -78,81 +78,74 @@ class Index
 
         <table id="demo"></table>
 
+        <script type="text/html" id="bar">
+            <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
+            <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-warm layui-btn-mini" lay-event="freeze">冻结</a>
+            <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
+
+
+        </script>
+
         <script>
 
-//            layui.use('table', function () {
-//                var table = layui.table;
-//
-//
-//                table.render({
-//                    elem: '#demo'
-//                    ,page: true
-//                    ,limits: [30,60,90,150,300]
-//                    ,limit: 60 //默认采用60
-//                    ,cols:  [[ //标题栏
-//                        {checkbox: true}
-//                        ,{field: 'id', title: 'ID', width: 80}
-//                        ,{field: 'username', title: '用户名', width: 120}
-//                    ]]
-//                });
-//
-//
-//            });
 
+            layui.use('table', function () {
+                var table = layui.table;
 
+                //展示已知数据
+                table.render({
+                    elem: '#demo'
+                    , url: './index.php?c=Report&a=SelectRep'
+                    , request: {
+                        pageName: 'page' //页码的参数名称，默认：page
+                        , limitName: 'limit' //每页数据量的参数名，默认：limit
+                    }
+                    , height: 480
+                    , cols: [[ //标题栏
+                        {checkbox: true, LAY_CHECKED: true} //默认全选
+                        , {field: 'id', title: 'ID', width: 100, sort: true}
+                        , {field: 'shop_name', title: '店铺名', width: 180}
+                        , {field: 'date', title: '日期', width: 100}
+//            ,{field: 'sign', title: '签名', width: 150}
+                        , {field: 'modify_time', title: '修改时间', width: 160}
+                        , {field: 'stateCN', title: '状态', width: 100}
+                        , {field: 'remarks', title: '备注', width: 500}
+//            ,{field: 'experience', title: '积分', width: 80, sort: true}
+                        , {fixed: 'right', title: '操作', width: 200, align: 'center', toolbar: '#bar'}
+                    ]]
+                    , skin: 'row' //表格风格
+                    , even: true
+                    , page: true //是否显示分页
+                    , limits: [5, 7, 10]
+                    , limit: 10 //每页默认显示的数量
+                });
 
-layui.use('table', function(){
-    var table = layui.table;
+                table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                    var data = obj.data; //获得当前行数据
+                    var layEvent = obj.event; //获得 lay-event 对应的值
+                    var tr = obj.tr; //获得当前行 tr 的DOM对象
 
-    //展示已知数据
-    table.render({
-        elem: '#demo'
-//        ,data: [{
-//            "id": "10001"
-//            ,"username": "杜甫"
-//            ,"email": "xianxin@layui.com"
-//            ,"sex": "男"
-//            ,"city": "浙江杭州"
-//            ,"sign": "人生恰似一场修行"
-//            ,"experience": "116"
-//            ,"ip": "192.168.0.8"
-//            ,"logins": "108"
-//            ,"joinTime": "2016-10-14"
-//        },  {
-//            "id": "10008"
-//            ,"username": "贤心"
-//            ,"email": "xianxin@layui.com"
-//            ,"sex": "男"
-//            ,"city": "浙江杭州"
-//            ,"sign": "人生恰似一场修行"
-//            ,"experience": "106"
-//            ,"ip": "192.168.0.8"
-//            ,"logins": "106"
-//            ,"joinTime": "2016-10-14"
-//        }]
-        , url: './index.php?c=Report&a=SelectRep'
-        ,request: {
-            pageName: 'page' //页码的参数名称，默认：page
-            ,limitName: 'limit' //每页数据量的参数名，默认：limit
-        }
-        ,height: 272
-        ,cols: [[ //标题栏
-            {checkbox: true, LAY_CHECKED: true} //默认全选
-            ,{field: 'id', title: 'ID', width: 80, sort: true}
-            ,{field: 'username', title: '用户名', width: 120}
-            ,{field: 'email', title: '邮箱', width: 150}
-            ,{field: 'sign', title: '签名', width: 150}
-            ,{field: 'sex', title: '性别', width: 80}
-            ,{field: 'city', title: '城市', width: 100}
-            ,{field: 'experience', title: '积分', width: 80, sort: true}
-        ]]
-        ,skin: 'row' //表格风格
-        ,even: true
-        ,page: true //是否显示分页
-        ,limits: [5, 7, 10]
-        ,limit: 5 //每页默认显示的数量
-    });
-});
+                    if (layEvent === 'detail') { //查看
+                        //do somehing
+                    } else if (layEvent === 'del') { //删除
+                        layer.confirm('真的删除行么', function (index) {
+                            obj.del(); //删除对应行（tr）的DOM结构
+                            layer.close(index);
+                            //向服务端发送删除指令
+                        });
+                    } else if (layEvent === 'edit') { //编辑
+                        //do something
+
+                        //同步更新缓存对应的值
+                        obj.update({
+                            username: '123'
+                            , title: 'xxx'
+                        });
+                    }
+                });
+
+            });
         </script>
 
         </body>
