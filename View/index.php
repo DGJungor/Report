@@ -24,7 +24,7 @@ class Index
             <title>Document</title>
 
             <!-- External CSS -->
-            <!--            <link rel="stylesheet" href="./Public/layui/css/layui.css">-->
+<!--                        <link rel="stylesheet" href="./Public/layui/css/layui.css">-->
             <link rel="stylesheet" href="./Public/layui/css/layui.css?t=1504112998306" media="all">
             <!--    <link rel="stylesheet" href="./Public/bootstrap/3.3.0/css/bootstrap.min.css">-->
             <!--    <link rel="stylesheet" href="./Public/Common/css/base.css">-->
@@ -38,13 +38,13 @@ class Index
             <!--    <script src="./Public/jquery/2.0.0/jquery.min.js"></script>-->
             <!--    <script src="./Public/My97DatePicker/WdatePicker.js"></script>-->
 
-            <!--                                    <script src="./Public/jquery/1.11.3/jquery.js"></script>-->
+            <!--                                                <script src="./Public/jquery/1.11.3/jquery.js"></script>-->
             <!--            <script src="//res.layui.com/layui/dist/layui.js?t=1504112998306" media="all"></script>-->
-            <script src="./Public/layui/layui.all.js"></script>
-            <!--            <script src="./Public/layui/layui.js?t=1504112998306" media="all"></script>-->
-            <!--                        <script src="./Public/layui/layui.js"></script>-->
-            <!--                        <script src="//res.layui.com/layui/dist/layui.js?t=1504112998306"></script>-->
 
+            <!--                        <script src="./Public/layui/layui.js?t=1504112998306" media="all"></script>-->
+            <!--                                    <script src="./Public/layui/layui.js"></script>-->
+            <!--                                    <script src="//res.layui.com/layui/dist/layui.js?t=1504112998306"></script>-->
+            <script src="./Public/layui/layui.all.js"></script>
 
             <!--  style  -->
             <style>
@@ -76,7 +76,7 @@ class Index
         </div>
         <div style="width: 100%; height: 50px"></div>
 
-        <table id="demo"></table>
+        <table id="demo" lay-filter="demo"></table>
 
         <script type="text/html" id="bar">
             <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
@@ -95,7 +95,8 @@ class Index
 
                 //展示已知数据
                 table.render({
-                    elem: '#demo'
+                    id: 'demo'
+                    , elem: '#demo'
                     , url: './index.php?c=Report&a=SelectRep'
                     , request: {
                         pageName: 'page' //页码的参数名称，默认：page
@@ -103,7 +104,8 @@ class Index
                     }
                     , height: 480
                     , cols: [[ //标题栏
-                        {checkbox: true, LAY_CHECKED: true} //默认全选
+//                        {checkbox: true, LAY_CHECKED: true} //默认全选
+                        {checkbox: false, LAY_CHECKED: false} //关闭选择框
                         , {field: 'id', title: 'ID', width: 100, sort: true}
                         , {field: 'shop_name', title: '店铺名', width: 180}
                         , {field: 'date', title: '日期', width: 100}
@@ -121,13 +123,18 @@ class Index
                     , limit: 10 //每页默认显示的数量
                 });
 
-                table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                table.on('tool(demo)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
                     var data = obj.data; //获得当前行数据
                     var layEvent = obj.event; //获得 lay-event 对应的值
                     var tr = obj.tr; //获得当前行 tr 的DOM对象
 
+                    var editurl = './index.php?c=Report&a=editRep&id=';
+
                     if (layEvent === 'detail') { //查看
                         //do somehing
+                        console.log(data);
+                        console.log(data.id);
+                        console.log(tr);
                     } else if (layEvent === 'del') { //删除
                         layer.confirm('真的删除行么', function (index) {
                             obj.del(); //删除对应行（tr）的DOM结构
@@ -135,13 +142,18 @@ class Index
                             //向服务端发送删除指令
                         });
                     } else if (layEvent === 'edit') { //编辑
-                        //do something
 
-                        //同步更新缓存对应的值
-                        obj.update({
-                            username: '123'
-                            , title: 'xxx'
-                        });
+                        //跳转到编辑页面
+                        window.location.href=editurl+data.id;
+
+//                        //同步更新缓存对应的值
+//                        obj.update({
+//                            username: '123'
+//                            , title: 'xxx'
+//                        });
+                    } else if (layEvent === 'freeze') { //冻结
+
+
                     }
                 });
 

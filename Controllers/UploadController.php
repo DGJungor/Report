@@ -105,7 +105,6 @@ class UploadController
                     ':out_num'  => $strs[8],
                     ':abs'      => $strs[2]
                 ));
-
                 //若果添加数据库出错  则抛出异常
                 if (!$affected_rows)
                     throw new PDOException('报表关联表添加失败');
