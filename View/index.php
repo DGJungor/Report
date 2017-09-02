@@ -136,7 +136,7 @@ class Index
                         console.log(data.id);
                         console.log(tr);
                     } else if (layEvent === 'del') { //删除
-                        layer.confirm('真的删除行么', function (index) {
+                        layer.confirm('删除此报表?', function (index) {
                             obj.del(); //删除对应行（tr）的DOM结构
                             layer.close(index);
                             //向服务端发送删除指令

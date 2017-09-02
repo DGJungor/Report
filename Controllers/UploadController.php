@@ -70,9 +70,9 @@ class UploadController
             $reportPDO->beginTransaction();
 
             //添加数据到数据库报表关联表中
-            $sql = 'INSERT INTO reports(shop_name,shop_code,date,add_time,modify_time) VALUE(:shop_name,:shop_code,:date,:add_time,:modify_time)';
-            $sth = $reportPDO->prepare($sql);
-            $sth->execute(array(
+            $sql    = 'INSERT INTO reports(shop_name,shop_code,date,add_time,modify_time) VALUE(:shop_name,:shop_code,:date,:add_time,:modify_time)';
+            $sth    = $reportPDO->prepare($sql);
+            $exec   = $sth->execute(array(
                 ':shop_name'   => $_POST['shopname'],
                 'shop_code'    => $_POST['shopcode'],
                 ':date'        => $_POST['date'],
@@ -81,8 +81,25 @@ class UploadController
             ));
             $lastID = $reportPDO->lastInsertId();
             //当添加数据库是出错 则抛出异常
-            if (!$lastID)
+            if (!$exec)
                 throw new PDOException('报表关联表添加失败');
+
+            //添加报表销售详情表
+            $daynum = $this->monDay($_POST['date']);
+            $sql    = 'INSERT INTO rep_details_sell(rid,date) VALUE(:rid,:date)';
+            $sth    = $reportPDO->prepare($sql);
+            for ($i = 0; $i < $daynum; $i++) {
+                $nday = $i + 1;
+                $date = date('Ymd',strtotime($_POST['date'] . '-' . $nday));
+                $exec = $sth->execute(array(
+                    ':rid'  => $lastID,
+                    ':date' => $date
+                ));
+                //当添加数据库是出错 则抛出异常
+                if (!$exec)
+                    throw new PDOException('报表销售详情表添加失败');
+            }
+
 
             //循环读取excel文件,读取一条,插入一条
             for ($j = 2; $j <= $highestRow; $j++) {
@@ -107,7 +124,7 @@ class UploadController
                 ));
                 //若果添加数据库出错  则抛出异常
                 if (!$affected_rows)
-                    throw new PDOException('报表关联表添加失败');
+                    throw new PDOException('报表详情仓库表添加失败');
             }
 
             //事务提交
@@ -122,7 +139,7 @@ class UploadController
         $reportPDO = null;
 
         //跳转回到显示页面
-        Header("Location: /index.php?c=Report&a=Index");
+        Header("Location: ./index.php?c=Report&a=Index");
 
         //清除上传临时上传文件夹下的所有xls文件
         $this->delFile("./upFile/", "xls");
@@ -131,39 +148,6 @@ class UploadController
 //        unlink($_SESSION['tmpExcel']['uploadfile']);
 
 
-//
-//        var_dump($highestRow);
-//        var_dump($highestColumn);
-//        var_dump($objPHPExcel);
-
-
-//            $count = $reportPDO->exec($sql);
-
-//                $reportPDO = '';
-//                var_dump($count);
-//                var_dump($sql);
-//                $sth = $reportPDO->prepare();
-
-//                $p   = $strs[0];
-
-        //使用PDO将数据添加到数据库
-
-
-//                $sql       = 'select * from report';
-//                $reportPDO->query('set names utf-8');
-//                $count     = $reportPDO->query("SELECT * FROM report" )->fetchALL();
-
-//            var_dump($str);
-//            var_dump($strs);
-//            var_dump($count);
-
-//            unlink($uploadfile); //删除上传的excel文件
-
-
-        //输出到视图
-//        require('View/test.php');
-//        $view = new Index();
-//        $view->display($data);
     }
 
     /*
@@ -240,6 +224,17 @@ class UploadController
         } else {
             if (file_exists($dir)) unlink($dir);
         }
+    }
+
+
+    /*
+     *计算年月中有多少天
+     * @param $date 输入的年月  格式为:y-M  例:2017-9
+     */
+    public function monDay($date)
+    {
+        $newdate = date('t', strtotime($date));
+        return $newdate;
     }
 
     //析构方法
