@@ -80,9 +80,10 @@ class Index
         <table id="demo" lay-filter="demo"></table>
 
         <script type="text/html" id="bar">
-            <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
+            <a class="layui-btn  layui-btn-primary layui-btn-mini" lay-event="detail">查看</a>
             <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
             <a class="layui-btn layui-btn-warm layui-btn-mini" lay-event="freeze">冻结</a>
+            <a class="layui-btn layui-btn-normal layui-btn-mini" lay-event="open">开启</a>
             <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
 
 
@@ -91,8 +92,9 @@ class Index
         <script>
 
 
-            layui.use('table', function () {
+            layui.use(['table', 'form'], function () {
                 var table = layui.table;
+                var form = layui.form;
 
                 //展示已知数据
                 table.render({
@@ -109,13 +111,13 @@ class Index
                         {checkbox: false, LAY_CHECKED: false} //关闭选择框
                         , {field: 'id', title: 'ID', width: 100, sort: true}
                         , {field: 'shop_name', title: '店铺名', width: 180}
-                        , {field: 'date', title: '日期', width: 100}
+                        , {field: 'date', title: '日期', width: 100, sort: true}
 //            ,{field: 'sign', title: '签名', width: 150}
-                        , {field: 'modify_time', title: '修改时间', width: 160}
-                        , {field: 'stateCN', title: '状态', width: 100}
+                        , {field: 'modify_time', title: '修改时间', width: 160, sort: true}
                         , {field: 'remarks', title: '备注', width: 500}
 //            ,{field: 'experience', title: '积分', width: 80, sort: true}
-                        , {fixed: 'right', title: '操作', width: 200, align: 'center', toolbar: '#bar'}
+                        , {field: 'stateCN', title: '状态', width: 60, fixed: 'right'}
+                        , {fixed: 'right', title: '操作', width: 250, align: 'center', toolbar: '#bar'}
                     ]]
                     , skin: 'row' //表格风格
                     , even: true
@@ -146,8 +148,8 @@ class Index
                                 url: "./index.php?c=Report&a=delRep",
                                 data: {'rid': data.id},
                                 dataType: "json",
-                                success : function(msg){
-                                    if(msg.code==1){
+                                success: function (msg) {
+                                    if (msg.code == 1) {
                                         layer.msg('删除成功');
                                     }
                                 },
@@ -156,9 +158,13 @@ class Index
 //                            layer.msg('删除成功');
                         });
                     } else if (layEvent === 'edit') { //编辑
+                        if (data.stateCN === '冻结') {
+                            layer.msg('此表已冻结');
+                        } else {
+                            //跳转到编辑页面
+                            window.location.href = editurl + data.id;
+                        }
 
-                        //跳转到编辑页面
-                        window.location.href = editurl + data.id;
 
 //                        //同步更新缓存对应的值
 //                        obj.update({
@@ -170,16 +176,41 @@ class Index
                         //异步想服务器端发送冻结命令
                         $.ajax({
                             type: "POST",
-                            url: "./index.php?c=Report&a=delRep",
-                            data: {'rid': data.id},
+                            url: "./index.php?c=Report&a=frozenRep",
+                            data: {'rid': data.id, 'action': 'freeze'},
                             dataType: "json",
-                            success : function(msg){
-                                if(msg.code==1){
-                                    layer.msg('删除成功');
+                            success: function (msg) {
+                                if (msg.code == 2) {
+                                    layer.msg('已冻结');
+                                    obj.update({
+                                        stateCN: '冻结',
+                                    });
                                 }
+
                             },
+                        });
+
+                    } else if (layEvent === 'open') { //开启
+
+                        //异步想服务器端发送冻结命令
+                        $.ajax({
+                            type: "POST",
+                            url: "./index.php?c=Report&a=frozenRep",
+                            data: {'rid': data.id, 'action': 'open'},
+                            dataType: "json",
+                            success: function (msg) {
+                                if (msg.code == 1) {
+                                    layer.msg('已开启');
+                                    obj.update({
+                                        stateCN: '开启',
+                                    });
+                                }
+
+                            },
+                        });
 
                     }
+
                 });
 
             });
