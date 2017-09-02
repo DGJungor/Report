@@ -24,7 +24,7 @@ class Index
             <title>Document</title>
 
             <!-- External CSS -->
-<!--                        <link rel="stylesheet" href="./Public/layui/css/layui.css">-->
+            <!--                        <link rel="stylesheet" href="./Public/layui/css/layui.css">-->
             <link rel="stylesheet" href="./Public/layui/css/layui.css?t=1504112998306" media="all">
             <!--    <link rel="stylesheet" href="./Public/bootstrap/3.3.0/css/bootstrap.min.css">-->
             <!--    <link rel="stylesheet" href="./Public/Common/css/base.css">-->
@@ -38,14 +38,15 @@ class Index
             <!--    <script src="./Public/jquery/2.0.0/jquery.min.js"></script>-->
             <!--    <script src="./Public/My97DatePicker/WdatePicker.js"></script>-->
 
-            <!--                                                <script src="./Public/jquery/1.11.3/jquery.js"></script>-->
+
             <!--            <script src="//res.layui.com/layui/dist/layui.js?t=1504112998306" media="all"></script>-->
 
             <!--                        <script src="./Public/layui/layui.js?t=1504112998306" media="all"></script>-->
             <!--                                    <script src="./Public/layui/layui.js"></script>-->
             <!--                                    <script src="//res.layui.com/layui/dist/layui.js?t=1504112998306"></script>-->
-            <script src="./Public/layui/layui.all.js"></script>
 
+            <script src="./Public/jquery/1.11.3/jquery.js"></script>
+            <script src="./Public/layui/layui.all.js"></script>
             <!--  style  -->
             <style>
                 body {
@@ -140,11 +141,24 @@ class Index
                             obj.del(); //删除对应行（tr）的DOM结构
                             layer.close(index);
                             //向服务端发送删除指令
+                            $.ajax({
+                                type: "POST",
+                                url: "./index.php?c=Report&a=delRep",
+                                data: {'rid': data.id},
+                                dataType: "json",
+                                success : function(msg){
+                                    if(msg.code==1){
+                                        layer.msg('删除成功');
+                                    }
+                                },
+                            });
+
+//                            layer.msg('删除成功');
                         });
                     } else if (layEvent === 'edit') { //编辑
 
                         //跳转到编辑页面
-                        window.location.href=editurl+data.id;
+                        window.location.href = editurl + data.id;
 
 //                        //同步更新缓存对应的值
 //                        obj.update({
@@ -153,6 +167,17 @@ class Index
 //                        });
                     } else if (layEvent === 'freeze') { //冻结
 
+                        //异步想服务器端发送冻结命令
+                        $.ajax({
+                            type: "POST",
+                            url: "./index.php?c=Report&a=delRep",
+                            data: {'rid': data.id},
+                            dataType: "json",
+                            success : function(msg){
+                                if(msg.code==1){
+                                    layer.msg('删除成功');
+                                }
+                            },
 
                     }
                 });
