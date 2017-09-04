@@ -213,6 +213,15 @@ LIMIT :offset, :rows
         $view->display();
     }
 
+
+
+    public function ShowRep()
+    {
+        require('View/show_report.php');
+        $view = new Index();
+        $view->display();
+    }
+
     public function Test1()
     {
 

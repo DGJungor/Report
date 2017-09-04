@@ -92,9 +92,10 @@ class Index
         <script>
 
 
-            layui.use(['table', 'form'], function () {
+            layui.use(['table', 'form','layer'], function () {
                 var table = layui.table;
                 var form = layui.form;
+                var layer = layui.layer;
 
                 //展示已知数据
                 table.render({
@@ -138,6 +139,20 @@ class Index
                         console.log(data);
                         console.log(data.id);
                         console.log(tr);
+//                        $.post('./test2.php', {}, function(str){
+//                            layer.open({
+//                                type: 1,
+//                                content: str //注意，如果str是object，那么需要字符拼接。
+//                            });
+//                        });
+                        var index = layer.open({
+                            type: 2,
+                            content: './index.php?c=Report&a=showRep',
+                            area: ['800px', '400px'],
+                            maxmin: true
+                        });
+                        layer.full(index);
+
                     } else if (layEvent === 'del') { //删除
                         layer.confirm('删除此报表?', function (index) {
                             obj.del(); //删除对应行（tr）的DOM结构
