@@ -24,7 +24,7 @@ class Index
             <title>Document</title>
 
             <!-- External CSS -->
-            <link rel="stylesheet" href="./Public/layui/css/layui.css">
+            <link rel="stylesheet" href="./Public/layui/css/layui.css?t=1504112998306" media="all">
             <!--            <link rel="stylesheet" href="./Public/bootstrap/3.3.0/css/bootstrap.min.css">-->
             <!--            <link rel="stylesheet" href="./Public/Common/css/base.css">-->
             <!--            <link rel="stylesheet" href="./Public/Common/css/report.css">-->
@@ -67,53 +67,65 @@ class Index
 
         </ul>
         <div style="width: 100%; height: 50px"></div>
-        <div class="layui-collapse">
-            <div class="layui-colla-item">
-                <h2 class="layui-colla-title">新建</h2>
-                <div class="layui-colla-content layui-show">
-                    <form class="layui-form" action="index.php?c=Upload&a=create" method="post">
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">店铺名</label>
-                            <div class="layui-input-block">
-                                <input type="text" name="shopname" lay-verify="required|text" placeholder="请输入输入店铺名"
-                                       autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">店铺代码</label>
-                            <div class="layui-input-block">
-                                <input type="text" name="shopcode" lay-verify="required" placeholder="请输入输入店铺机构代码"
-                                       autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">日期</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="date" lay-verify="date" class="layui-input" id="date">
-                            </div>
-                            <div class="layui-form-mid layui-word-aux">辅助文字</div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">Excel表格</label>
-                            <div class="layui-input-inline">
-                                <div class="layui-upload" style="width: 200px">
-                                    <input type="hidden" lay-verify="hidden" name="upmag" id="upmag" value="">
-                                    <button type="button" class="layui-btn layui-btn-normal" id="choiceExcel">选择文件
-                                    </button>
-                                    <!--                                    <button type="button" class="layui-btn" id="upFile">开始上传</button>-->
-                                    <span class="layui-inline " id="filename"></span>
-                                </div>
-                            </div>
-                            <div class="layui-form-mid layui-word-aux"><a href="./dowFile/report.xls">点击下载报表模板文件</a>
-                            </div>
-                        </div>
 
-                        <div class="layui-form-item">
-                            <div class="layui-input-block">
-                                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
-                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        <div class="layui-container">
+            <div class="layui-row">
+                <div class="layui-col-md12">
+                    <div class="layui-collapse">
+                        <div class="layui-colla-item">
+                            <h2 class="layui-colla-title">新建</h2>
+                            <div class="layui-colla-content layui-show">
+                                <form class="layui-form" action="index.php?c=Upload&a=create" method="post">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">店铺名</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="shopname" lay-verify="required|text"
+                                                   placeholder="请输入输入店铺名"
+                                                   autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">店铺代码</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="shopcode" lay-verify="required"
+                                                   placeholder="请输入输入店铺机构代码"
+                                                   autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">日期</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="date" lay-verify="date" class="layui-input"
+                                                   id="date">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">辅助文字</div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Excel表格</label>
+                                        <div class="layui-input-inline">
+                                            <div class="layui-upload" style="width: 200px">
+                                                <input type="hidden" lay-verify="hidden" name="upmag" id="upmag"
+                                                       value="">
+                                                <button type="button" class="layui-btn layui-btn-normal"
+                                                        id="choiceExcel">选择文件
+                                                </button>
+                                                <!--                                    <button type="button" class="layui-btn" id="upFile">开始上传</button>-->
+                                                <span class="layui-inline " id="filename"></span>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux"><a href="./dowFile/report.xls">点击下载报表模板文件</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                </form>
                             </div>
-                    </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -211,7 +223,6 @@ class Index
             });
 
         </script>
-
 
 
         </body>

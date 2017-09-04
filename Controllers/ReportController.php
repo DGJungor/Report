@@ -217,7 +217,12 @@ LIMIT :offset, :rows
 
     public function ShowRep()
     {
-        require('View/show_report.php');
+
+        var_dump($_GET);      //测试数据
+
+
+
+        require('View/layer/show_report.php');
         $view = new Index();
         $view->display();
     }

@@ -92,7 +92,7 @@ class Index
         <script>
 
 
-            layui.use(['table', 'form','layer'], function () {
+            layui.use(['table', 'form', 'layer'], function () {
                 var table = layui.table;
                 var form = layui.form;
                 var layer = layui.layer;
@@ -106,11 +106,11 @@ class Index
                         pageName: 'page' //页码的参数名称，默认：page
                         , limitName: 'limit' //每页数据量的参数名，默认：limit
                     }
-                    , height: 480
+//                    , height: 480
                     , cols: [[ //标题栏
 //                        {checkbox: true, LAY_CHECKED: true} //默认全选
-                        {checkbox: false, LAY_CHECKED: false} //关闭选择框
-                        , {field: 'id', title: 'ID', width: 100, sort: true}
+//                        {checkbox: false, LAY_CHECKED: false} //关闭选择框
+                        {field: 'id', title: 'ID', width: 100, sort: true}
                         , {field: 'shop_name', title: '店铺名', width: 180}
                         , {field: 'date', title: '日期', width: 100, sort: true}
 //            ,{field: 'sign', title: '签名', width: 150}
@@ -146,8 +146,9 @@ class Index
 //                            });
 //                        });
                         var index = layer.open({
+                            title: data.shop_name+data.date,
                             type: 2,
-                            content: './index.php?c=Report&a=showRep',
+                            content: './index.php?c=Report&a=showRep&id='+data.id,
                             area: ['800px', '400px'],
                             maxmin: true
                         });
