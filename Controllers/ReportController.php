@@ -26,7 +26,8 @@ class ReportController
         $PDO = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASSWD);
 
         //PDO 获取报表总条数
-        $sthCN = $PDO->query('SELECT
+        $sthCN = $PDO->query('
+SELECT
 COUNT(*)
 FROM
 reports
@@ -34,7 +35,8 @@ reports
         $CN    = $sthCN->fetch();
 
         //获取查询数据
-        $sql = 'SELECT
+        $sql = '
+SELECT
 reports.id,
 reports.shop_code,
 reports.shop_name,
@@ -220,11 +222,45 @@ LIMIT :offset, :rows
 
         var_dump($_GET);      //测试数据
 
+        $rid = $_GET['id'];
+
+        //使用POD连接数据库
+        $PDO = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASSWD);
+
+
+        //获取查询数据
+        $sql = '
+SELECT
+rep_details_goods.id,
+rep_details_goods.in_id,
+rep_details_goods.in_name,
+rep_details_goods.out_id,
+rep_details_goods.in_num,
+rep_details_goods.out_name,
+rep_details_goods.out_num
+FROM
+rep_details_goods
+WHERE
+rep_details_goods.rid = :rid
+ORDER BY
+rep_details_goods.id ASC
+
+';
+        $sth = $PDO->prepare($sql);
+        $sth->bindParam(':rid', $rid, PDO::PARAM_INT);
+        $sth->execute();
+        $warehouse = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+
+        //关闭PDO数据库
+        $PDO = null;
 
 
         require('View/layer/show_report.php');
         $view = new Index();
-        $view->display();
+        $view->display($warehouse);
     }
 
     public function Test1()

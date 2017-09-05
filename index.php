@@ -27,6 +27,52 @@ $controller->$method($param);
 
 //使用方法   url:http://www.r2.com/index.php?c=Demo&a=Index&param=welcome
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  *                             _ooOoo_
  *                            o8888888o
