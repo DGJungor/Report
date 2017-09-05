@@ -22,6 +22,8 @@
     <!--    <script src="./Public/layui/layui.js"></script>-->
     <!--                    <script src="./Public/jquery/1.11.3/jquery.js"></script>-->
     <!--            <script src="//res.layui.com/layui/dist/layui.js?t=1504112998306" media="all"></script>-->
+
+    <script src="./Public/layui/layui.js"></script>
     <script src="./Public/layui/layui.all.js"></script>
 
     <style>
@@ -38,81 +40,60 @@
 </head>
 <body>
 
-<?php
 
-echo date('t', strtotime('2017-02'))
+<table class="layui-table" lay-filter="test3">
+    <thead>
+    <tr>
+        <th lay-data="{field:'id', width:80, sort: true,edit:'text'}">ID</th>
+        <th lay-data="{field:'username', width:120, sort: true, edit: 'text'}">用户名</th>
+        <th lay-data="{field:'email', width:150, edit: 'text'}">邮箱</th>
+        <th lay-data="{field:'sex', width:80, edit: 'text'}">性别</th>
+        <th lay-data="{field:'city', width:100, edit: 'text'}">城市</th>
+        <th lay-data="{field:'sign', width:150, edit: 'text'}">签名</th>
+        <th lay-data="{field:'experience', width:80, sort: true, edit: 'text'}">积分</th>
+        <th lay-data="{field:'ip', width:120, edit: 'text'}">IP</th>
+        <th lay-data="{field:'logins', width:100, edit: 'text'}">登入次数</th>
+        <th lay-data="{field:'joinTime', width:120, edit: 'text'}">加入时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>2131</td>
+        <td>2131</td>
+        <td>2131</td>
+        <td>2131</td>
+        <td>2131</td>
+        <td>2131</td>
+        <td>2131</td>
+        <td>2131</td>
+        <td>2131</td>
+        <td>2131</td>
+        <td>2131</td>
+        <td>2131</td>
+    </tr>
+    </tbody>
+</table>
 
-?>
 
-
-
-
-<a href="./index.php?c=Report&a=Test1&page=1&limit=5">测试</a>
-<table id="demo"></table>
-<script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
-    <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
-
-    <!-- 这里同样支持 laytpl 语法，如： -->
-
-</script>
-
-<!--http://www.r2.com/index.php?c=Report&a=SelectRep&page=1&limit=5-->
-<!--<script src="/static/build/layui.js"></script>-->
 <script>
-
-
-    layui.use('table', function () {
+    layui.use('table', function(){
         var table = layui.table;
 
-        //展示已知数据
-        table.render({
-            elem: '#demo'
-            , data: [{
-                "id": "10007"
-                , "username": "贤心"
-                , "email": "xianxin@layui.com"
-                , "sex": "男"
-                , "city": "浙江杭州"
-                , "sign": "人生恰似一场修行"
-                , "experience": "16"
-                , "ip": "192.168.0.8"
-                , "logins": "106"
-                , "joinTime": "2016-10-14"
-            }, {
-                "id": "10008"
-                , "username": "贤心"
-                , "email": "xianxin@layui.com"
-                , "sex": "男"
-                , "city": "浙江杭州"
-                , "sign": "人生恰似一场修行"
-                , "experience": "106"
-                , "ip": "192.168.0.8"
-                , "logins": "106"
-                , "joinTime": "2016-10-14"
-            }]
-            , height: 272
-            , cols: [[ //标题栏
-                {checkbox: true, LAY_CHECKED: true} //默认全选
-                , {field: 'id', title: 'ID', width: 80, sort: true}
-                , {field: 'username', title: '用户名', width: 120}
-                , {field: 'email', title: '邮箱', width: 150}
-                , {field: 'sign', title: '签名', width: 150}
-                , {field: 'sex', title: '性别', width: 80}
-                , {field: 'city', title: '城市', width: 100}
-                , {field: 'experience', title: '积分', width: 80, sort: true}
-                , {fixed: 'right', width: 150, align: 'center', toolbar: '#barDemo'}
-            ]]
-//    ,skin: 'row' //表格风格
-//            ,even: true
-//            ,page: true //是否显示分页
-//            ,limits: [5, 7, 10]
-//            ,limit: 5 //每页默认显示的数量
+        //监听单元格编辑
+        table.on('edit(test3)', function(obj){
+            var value = obj.value //得到修改后的值
+                ,data = obj.data //得到所在行所有键值
+                ,field = obj.field; //得到字段
+            layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
         });
     });
-
 </script>
+
+
+
+
+
+
 </body>
 </html>
 

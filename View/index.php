@@ -113,10 +113,8 @@ class Index
                         {field: 'id', title: 'ID', width: 100, sort: true}
                         , {field: 'shop_name', title: '店铺名', width: 180}
                         , {field: 'date', title: '日期', width: 100, sort: true}
-//            ,{field: 'sign', title: '签名', width: 150}
                         , {field: 'modify_time', title: '修改时间', width: 160, sort: true}
                         , {field: 'remarks', title: '备注', width: 500}
-//            ,{field: 'experience', title: '积分', width: 80, sort: true}
                         , {field: 'stateCN', title: '状态', width: 60, fixed: 'right'}
                         , {fixed: 'right', title: '操作', width: 250, align: 'center', toolbar: '#bar'}
                     ]]
@@ -146,9 +144,9 @@ class Index
 //                            });
 //                        });
                         var index = layer.open({
-                            title: data.shop_name+data.date,
+                            title: '查看'+data.shop_name + data.date,
                             type: 2,
-                            content: './index.php?c=Report&a=showRep&id='+data.id,
+                            content: './index.php?c=Report&a=showRep&id=' + data.id,
                             area: ['800px', '400px'],
                             maxmin: true
                         });
@@ -161,7 +159,7 @@ class Index
                             //向服务端发送删除指令
                             $.ajax({
                                 type: "POST",
-                                url: "./index.php?c=Report&a=delRep",
+                                url: "./index.php?c=AjaxRep&a=delRep",
                                 data: {'rid': data.id},
                                 dataType: "json",
                                 success: function (msg) {
@@ -178,7 +176,17 @@ class Index
                             layer.msg('此表已冻结');
                         } else {
                             //跳转到编辑页面
-                            window.location.href = editurl + data.id;
+//                            window.location.href = editurl + data.id;
+                            var index = layer.open({
+                                title: '编辑'+data.shop_name + data.date,
+                                type: 2,
+                                content: './index.php?c=Report&a=editRep&id=' + data.id,
+                                area: ['800px', '400px'],
+                                maxmin: true
+                            });
+                            layer.full(index);
+
+
                         }
 
 

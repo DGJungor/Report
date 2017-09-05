@@ -34,6 +34,7 @@ class Index
             <!--            <script src="./Public/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
             <!--            <script src="./Public/jquery/2.0.0/jquery.min.js"></script>-->
             <!--                <script src="./Public/My97DatePicker/WdatePicker.js"></script>-->
+            <script src="./Public/jquery/1.11.3/jquery.js"></script>
             <script src="./Public/layui/layui.js"></script>
             <script src="./Public/layui/layui.all.js"></script>
 
@@ -65,12 +66,11 @@ class Index
                             <tr>
 
                                 <th lay-data="{align:'center',field:'no', width:70}" rowspan="2">NO.</th>
-                                <th lay-data="{align:'center',field:'id', width:70}" rowspan="2">ID</th>
                                 <th lay-data="{align:'center',field:'in'}" colspan="3">入库</th>
                                 <th lay-data="{align:'center',field:'out'}" colspan="3">出库</th>
                             </tr>
                             <tr>
-                                <th lay-data="{align:'center',field:'in_id', width:150}">单据编号</th>
+                                <th lay-data="{align:'center',field:'in_id', width:150,edit:'text'}">单据编号</th>
                                 <th lay-data="{align:'center',field:'in_name', width:250}">对方店铺/大仓</th>
                                 <th lay-data="{align:'center',field:'in_num', width:70}">数量</th>
                                 <th lay-data="{align:'center',field:'out_id', width:150}">单据编号</th>
@@ -86,7 +86,6 @@ class Index
                                 ?>
                                 <tr>
                                     <td><?php echo $v + 1; ?></td>
-                                    <td><?php echo $k['id']; ?></td>
                                     <td></td>
                                     <td></td>
                                     <td><?php echo $k['in_id']; ?></td>
@@ -242,6 +241,15 @@ class Index
                         //支持所有基础参数
                     });
 
+
+                    //监听单元格编辑
+                    table.on('edit(warehouse)', function(obj){
+                        var value = obj.value //得到修改后的值
+                            ,data = obj.data //得到所在行所有键值
+                            ,field = obj.field; //得到字段
+                        layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
+                        console.log(field);
+                    });
 
                 });
 
