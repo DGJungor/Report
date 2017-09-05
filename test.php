@@ -44,6 +44,9 @@ echo date('t', strtotime('2017-02'))
 
 ?>
 
+
+
+
 <a href="./index.php?c=Report&a=Test1&page=1&limit=5">测试</a>
 <table id="demo"></table>
 <script type="text/html" id="barDemo">

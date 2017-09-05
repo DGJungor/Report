@@ -220,7 +220,7 @@ LIMIT :offset, :rows
     public function ShowRep()
     {
 
-        var_dump($_GET);      //测试数据
+//        var_dump($_GET);      //测试数据
 
         $rid = $_GET['id'];
 
@@ -251,7 +251,38 @@ rep_details_goods.id ASC
         $sth->execute();
         $warehouse = $sth->fetchAll(PDO::FETCH_ASSOC);
 
-
+        //获取销售收据
+        $sql='
+SELECT
+rep_details_sell.c_gro,
+rep_details_sell.c_purchase,
+rep_details_sell.c_ing,
+rep_details_sell.c_balance,
+rep_details_sell.in_cash,
+rep_details_sell.in_coupon,
+rep_details_sell.in_mk,
+rep_details_sell.in_purchase,
+rep_details_sell.in_card_wl,
+rep_details_sell.in_card_wd,
+rep_details_sell.sell_ddis,
+rep_details_sell.sell_net,
+rep_details_sell.sell_dpro,
+rep_details_sell.sell_dvip,
+rep_details_sell.sell_mon,
+rep_details_sell.sell_num,
+rep_details_sell.date,
+rep_details_sell.rid
+FROM
+rep_details_sell
+WHERE
+rep_details_sell.rid = :rid
+ORDER BY
+rep_details_sell.date ASC
+';
+        $sth = $PDO->prepare($sql);
+        $sth->bindParam(':rid', $rid, PDO::PARAM_INT);
+        $sth->execute();
+        $sell = $sth->fetchAll(PDO::FETCH_ASSOC);
 
 
         //关闭PDO数据库
@@ -260,7 +291,7 @@ rep_details_goods.id ASC
 
         require('View/layer/show_report.php');
         $view = new Index();
-        $view->display($warehouse);
+        $view->display($warehouse,$sell);
     }
 
     public function Test1()
