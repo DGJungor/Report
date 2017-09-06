@@ -85,54 +85,6 @@ LIMIT :offset, :rows
     }
 
 
-    /*
-     * 执行冻结报表表
-     *返回ajax代码   1: 报表开启成功  2:报表冻结成功
-     *
-     * @param $rid   需要冻结的报表id
-     */
-    public function frozenRep()
-    {
-        //获取需要修改状态的报表ID
-        $rid = $_POST['rid'];
-
-        //使用POD连接数据库
-        $PDO = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASSWD);
-        $sql = "UPDATE reports set state=:state WHERE id=:rid";
-        $sth = $PDO->prepare($sql);
-        switch ($_POST['action']) {
-            case 'open':
-
-                $affected_rows = $sth->execute(array(
-                    ':state' => 1,
-                    ':rid'   => $rid
-                ));
-                if($affected_rows){
-                    $mag['code'] = 1;
-                    $mag['mag']='开启成功';
-                }
-                break;
-            case 'freeze':
-                $affected_rows = $sth->execute(array(
-                    ':state' => 0,
-                    ':rid'   => $rid
-                ));
-                if($affected_rows){
-                    $mag['code'] = 2;
-                    $mag['mag']='冻结成功';
-                }
-                break;
-            default:
-                break;
-        }
-        //关闭PDO链接
-        $PDO = null;
-
-        //返回ajax 的信息
-
-        echo json_encode($mag);
-    }
-
     public function Index()
     {
 
@@ -236,9 +188,6 @@ rep_details_sell.date ASC
 
     public function editRep()
     {
-//        var_dump($_GET);
-
-
 
         $rid = $_GET['id'];
 
@@ -262,7 +211,6 @@ WHERE
 rep_details_goods.rid = :rid
 ORDER BY
 rep_details_goods.id ASC
-
 ';
         $sth = $PDO->prepare($sql);
         $sth->bindParam(':rid', $rid, PDO::PARAM_INT);
@@ -307,11 +255,6 @@ rep_details_sell.date ASC
         //关闭PDO数据库
         $PDO = null;
 
-//        var_dump($sell);
-
-        require('View/layer/show_report.php');
-        $view = new Index();
-        $view->display($warehouse,$sell);
 
 
         require('View/layer/edit_report.php');

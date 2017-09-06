@@ -200,7 +200,7 @@ class Index
                         //异步想服务器端发送冻结命令
                         $.ajax({
                             type: "POST",
-                            url: "./index.php?c=Report&a=frozenRep",
+                            url: "./index.php?c=AjaxRep&a=frozenRep",
                             data: {'rid': data.id, 'action': 'freeze'},
                             dataType: "json",
                             success: function (msg) {
@@ -219,7 +219,7 @@ class Index
                         //异步想服务器端发送冻结命令
                         $.ajax({
                             type: "POST",
-                            url: "./index.php?c=Report&a=frozenRep",
+                            url: "./index.php?c=AjaxRep&a=frozenRep",
                             data: {'rid': data.id, 'action': 'open'},
                             dataType: "json",
                             success: function (msg) {

@@ -30,7 +30,7 @@ class Index
             <!--            <link rel="stylesheet" href="./Public/Common/css/report.css">-->
 
             <!-- JS   -->
-            <script src="./Public/jquery/1.11.3/jquery.js"></script>
+
             <!--            <script src="./Public/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
             <!--            <script src="./Public/jquery/2.0.0/jquery.min.js"></script>-->
             <!--                <script src="./Public/My97DatePicker/WdatePicker.js"></script>-->
@@ -66,11 +66,12 @@ class Index
                             <tr>
 
                                 <th lay-data="{align:'center',field:'no', width:70}" rowspan="2">NO.</th>
+                                <th lay-data="{align:'center',field:'id', width:70}" rowspan="2">ID</th>
                                 <th lay-data="{align:'center',field:'in'}" colspan="3">入库</th>
                                 <th lay-data="{align:'center',field:'out'}" colspan="3">出库</th>
                             </tr>
                             <tr>
-                                <th lay-data="{align:'center',field:'in_id', width:150,edit:'text'}">单据编号</th>
+                                <th lay-data="{align:'center',field:'in_id', width:150}">单据编号</th>
                                 <th lay-data="{align:'center',field:'in_name', width:250}">对方店铺/大仓</th>
                                 <th lay-data="{align:'center',field:'in_num', width:70}">数量</th>
                                 <th lay-data="{align:'center',field:'out_id', width:150}">单据编号</th>
@@ -86,6 +87,7 @@ class Index
                                 ?>
                                 <tr>
                                     <td><?php echo $v + 1; ?></td>
+                                    <td><?php echo $k['id']; ?></td>
                                     <td></td>
                                     <td></td>
                                     <td><?php echo $k['in_id']; ?></td>
@@ -119,29 +121,30 @@ class Index
                             <thead>
                             <tr>
 
-                                <th lay-data="{align:'center',field:'no', width:96,}" rowspan="2">日期</th>
-                                <th lay-data="{align:'center',field:'in', width:520}" colspan="6">销售收入</th>
-                                <th lay-data="{align:'center',field:'out', width:520}" colspan="6">销售收款</th>
-                                <th lay-data="{align:'center',field:'c', width:520}" colspan="4">现金状态</th>
+                                <th lay-data="{align:'center',field:'id', width:96,}" rowspan="2">ID</th>
+                                <th lay-data="{align:'center',field:'date', width:96,}" rowspan="2">日期</th>
+                                <th lay-data="{align:'center',field:'in'}" colspan="6">销售收入</th>
+                                <th lay-data="{align:'center',field:'out'}" colspan="6">销售收款</th>
+                                <th lay-data="{align:'center',field:'c'}" colspan="4">现金状态</th>
                             </tr>
                             <tr>
-                                <th lay-data="{align:'center',field:'sell_num', width:63}">数量</th>
-                                <th lay-data="{align:'center',field:'sell_mon', width:58}">金额</th>
-                                <th lay-data="{align:'center',field:'sell_dvip', width:67}">减:VIP</th>
-                                <th lay-data="{align:'center',field:'sell_dpro', width:76}">减:促销</th>
-                                <th lay-data="{align:'center',field:'sell_ddis', width:74}">减:积分</th>
-                                <th lay-data="{align:'center',field:'sell_net', width:80}">销售净额</th>
+                                <th lay-data="{align:'center',field:'sell_num',edit:'text', width:85}">数量</th>
+                                <th lay-data="{align:'center',field:'sell_mon',edit:'text', width:85}">金额</th>
+                                <th lay-data="{align:'center',field:'sell_dvip',edit:'text', width:85}">减:VIP</th>
+                                <th lay-data="{align:'center',field:'sell_dpro', edit:'text',width:85}">减:促销</th>
+                                <th lay-data="{align:'center',field:'sell_ddis',edit:'text', width:85}">减:积分</th>
+                                <th lay-data="{align:'center',field:'sell_net',edit:'text', width:85}">销售净额</th>
 
-                                <th lay-data="{align:'center',field:'in_card_wd', width:80}">有线刷卡</th>
-                                <th lay-data="{align:'center',field:'in_card_wl', width:83}">无线刷卡</th>
-                                <th lay-data="{align:'center',field:'in_purchase', width:82}">内购收现</th>
-                                <th lay-data="{align:'center',field:'in_mk', width:83}">商场收款</th>
-                                <th lay-data="{align:'center',field:'in_coupon', width:72}">代金券</th>
-                                <th lay-data="{align:'center',field:'in_cash', width:83}">现金收入</th>
-                                <th lay-data="{align:'center',field:'c_ing', width:79}">进行现金</th>
-                                <th lay-data="{align:'center',field:'c_balance', width:79}">现金余额</th>
-                                <th lay-data="{align:'center',field:'c_purchase', width:79}">内购现金</th>
-                                <th lay-data="{align:'center',field:'c_gro', width:66}">成长金</th>
+                                <th lay-data="{align:'center',field:'in_card_wd', edit:'text',width:85}">有线刷卡</th>
+                                <th lay-data="{align:'center',field:'in_card_wl', edit:'text',width:85}">无线刷卡</th>
+                                <th lay-data="{align:'center',field:'in_purchase', edit:'text',width:85}">内购收现</th>
+                                <th lay-data="{align:'center',field:'in_mk', edit:'text',width:85}">商场收款</th>
+                                <th lay-data="{align:'center',field:'in_coupon',edit:'text', width:85}">代金券</th>
+                                <th lay-data="{align:'center',field:'in_cash',edit:'text', width:85}">现金收入</th>
+                                <th lay-data="{align:'center',field:'c_ing',edit:'text', width:85}">进行现金</th>
+                                <th lay-data="{align:'center',field:'c_balance',edit:'text', width:85}">现金余额</th>
+                                <th lay-data="{align:'center',field:'c_purchase',edit:'text', width:85}">内购现金</th>
+                                <th lay-data="{align:'center',field:'c_gro', edit:'text',width:85}">成长金</th>
 
                             </tr>
                             </thead>
@@ -175,6 +178,7 @@ class Index
                             foreach ($sell as $v => $k) {
                                 ?>
                                 <tr>
+                                    <td><?php echo $k['id']; ?></td>
                                     <td><?php echo $k['date']; ?></td>
                                     <td></td>
                                     <td></td>
@@ -220,6 +224,8 @@ class Index
 
                 layui.use(['table', 'form', 'layer'], function () {
                     var table = layui.table;
+                    var form = layui.form;
+                    var layer = layui.layer;
 
                     table.init('warehouse', {
                         page: true //是否显示分页
@@ -243,13 +249,32 @@ class Index
 
 
                     //监听单元格编辑
-                    table.on('edit(warehouse)', function(obj){
+                    table.on('edit(sell)', function(obj){
                         var value = obj.value //得到修改后的值
                             ,data = obj.data //得到所在行所有键值
                             ,field = obj.field; //得到字段
-                        layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
+
                         console.log(field);
+
+                        $.ajax({
+                            type: "POST",
+                            url: "./index.php?c=AjaxRep&a=editOne",
+                            data: {'surface':'sell','id': data.id,'field':field,'value':value},
+                            dataType: "json",
+                            success: function (msg) {
+                                if (msg.code == 0) {
+                                    layer.msg('修改失败');
+                                    console.log(obj.value); //得到修改后的值
+                                    console.log(obj.field); //当前编辑的字段名
+                                    console.log(obj.data); //所在行的所有相关数据 
+
+                                }else if(msg.code == 1){
+                                    layer.msg('[日期: '+ data.date +'] ' + field + ' 字段更改为：'+ value);
+                                }
+                            },
+                        });
                     });
+
 
                 });
 

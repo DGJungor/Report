@@ -8,7 +8,7 @@
  */
 class Index
 {
-    public function display($warehouse,$sell)
+    public function display($warehouse, $sell)
     {
 //        var_dump($warehouse);
         ?>
@@ -119,63 +119,64 @@ class Index
                         <table lay-filter="sell">
                             <thead>
                             <tr>
-
+                                <th lay-data="{align:'center',field:'id', width:96,}" rowspan="2">ID</th>
                                 <th lay-data="{align:'center',field:'no', width:96,}" rowspan="2">日期</th>
-                                <th lay-data="{align:'center',field:'in', width:520}" colspan="6">销售收入</th>
-                                <th lay-data="{align:'center',field:'out', width:520}" colspan="6">销售收款</th>
-                                <th lay-data="{align:'center',field:'c', width:520}" colspan="4">现金状态</th>
+                                <th lay-data="{align:'center',field:'in'}" colspan="6">销售收入</th>
+                                <th lay-data="{align:'center',field:'out'}" colspan="6">销售收款</th>
+                                <th lay-data="{align:'center',field:'c'}" colspan="4">现金状态</th>
                             </tr>
                             <tr>
-                                <th lay-data="{align:'center',field:'sell_num', width:63}">数量</th>
-                                <th lay-data="{align:'center',field:'sell_mon', width:58}">金额</th>
-                                <th lay-data="{align:'center',field:'sell_dvip', width:67}">减:VIP</th>
-                                <th lay-data="{align:'center',field:'sell_dpro', width:76}">减:促销</th>
-                                <th lay-data="{align:'center',field:'sell_ddis', width:74}">减:积分</th>
-                                <th lay-data="{align:'center',field:'sell_net', width:80}">销售净额</th>
+                                <th lay-data="{align:'center',field:'sell_num', width:85}">数量</th>
+                                <th lay-data="{align:'center',field:'sell_mon', width:85}">金额</th>
+                                <th lay-data="{align:'center',field:'sell_dvip', width:85}">减:VIP</th>
+                                <th lay-data="{align:'center',field:'sell_dpro', width:85}">减:促销</th>
+                                <th lay-data="{align:'center',field:'sell_ddis', width:85}">减:积分</th>
+                                <th lay-data="{align:'center',field:'sell_net', width:85}">销售净额</th>
 
-                                <th lay-data="{align:'center',field:'in_card_wd', width:80}">有线刷卡</th>
-                                <th lay-data="{align:'center',field:'in_card_wl', width:83}">无线刷卡</th>
-                                <th lay-data="{align:'center',field:'in_purchase', width:82}">内购收现</th>
-                                <th lay-data="{align:'center',field:'in_mk', width:83}">商场收款</th>
-                                <th lay-data="{align:'center',field:'in_coupon', width:72}">代金券</th>
-                                <th lay-data="{align:'center',field:'in_cash', width:83}">现金收入</th>
-                                <th lay-data="{align:'center',field:'c_ing', width:79}">进行现金</th>
-                                <th lay-data="{align:'center',field:'c_balance', width:79}">现金余额</th>
-                                <th lay-data="{align:'center',field:'c_purchase', width:79}">内购现金</th>
-                                <th lay-data="{align:'center',field:'c_gro', width:66}">成长金</th>
+                                <th lay-data="{align:'center',field:'in_card_wd', width:85}">有线刷卡</th>
+                                <th lay-data="{align:'center',field:'in_card_wl', width:85}">无线刷卡</th>
+                                <th lay-data="{align:'center',field:'in_purchase', width:85}">内购收现</th>
+                                <th lay-data="{align:'center',field:'in_mk', width:85}">商场收款</th>
+                                <th lay-data="{align:'center',field:'in_coupon', width:85}">代金券</th>
+                                <th lay-data="{align:'center',field:'in_cash', width:85}">现金收入</th>
+                                <th lay-data="{align:'center',field:'c_ing', width:85}">进行现金</th>
+                                <th lay-data="{align:'center',field:'c_balance', width:85}">现金余额</th>
+                                <th lay-data="{align:'center',field:'c_purchase', width:85}">内购现金</th>
+                                <th lay-data="{align:'center',field:'c_gro', width:85}">成长金</th>
 
                             </tr>
                             </thead>
 
                             <tbody>
 
-<!--                            <tr>-->
-<!--                                <td>1</td>-->
-<!--                                <td>2</td>-->
-<!--                                <td>3</td>-->
-<!--                                <td>4</td>-->
-<!--                                <td>5</td>-->
-<!--                                <td>6</td>-->
-<!--                                <td>7</td>-->
-<!--                                <td>8</td>-->
-<!--                                <td>9</td>-->
-<!--                                <td>10</td>-->
-<!--                                <td>11</td>-->
-<!--                                <td>12</td>-->
-<!--                                <td>13</td>-->
-<!--                                <td>14</td>-->
-<!--                                <td>15</td>-->
-<!--                                <td>16</td>-->
-<!--                                <td>17</td>-->
-<!--                                <td>18</td>-->
-<!--                                <td>19</td>-->
-<!--                                <td>20</td>-->
-<!--                            </tr>-->
+                            <!--                            <tr>-->
+                            <!--                                <td>1</td>-->
+                            <!--                                <td>2</td>-->
+                            <!--                                <td>3</td>-->
+                            <!--                                <td>4</td>-->
+                            <!--                                <td>5</td>-->
+                            <!--                                <td>6</td>-->
+                            <!--                                <td>7</td>-->
+                            <!--                                <td>8</td>-->
+                            <!--                                <td>9</td>-->
+                            <!--                                <td>10</td>-->
+                            <!--                                <td>11</td>-->
+                            <!--                                <td>12</td>-->
+                            <!--                                <td>13</td>-->
+                            <!--                                <td>14</td>-->
+                            <!--                                <td>15</td>-->
+                            <!--                                <td>16</td>-->
+                            <!--                                <td>17</td>-->
+                            <!--                                <td>18</td>-->
+                            <!--                                <td>19</td>-->
+                            <!--                                <td>20</td>-->
+                            <!--                            </tr>-->
 
                             <?php
                             foreach ($sell as $v => $k) {
                                 ?>
                                 <tr>
+                                    <td><?php echo $k['id']; ?></td>
                                     <td><?php echo $k['date']; ?></td>
                                     <td></td>
                                     <td></td>
@@ -204,9 +205,6 @@ class Index
                             ?>
                             <!--                            </tbody>-->
                         </table>
-
-
-
 
 
                     </div>
@@ -240,6 +238,7 @@ class Index
                         , even: true //开启隔行背景
                         , size: 'sm' //小尺寸的表格
                         //支持所有基础参数
+                        
                     });
 
 
