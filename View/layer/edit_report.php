@@ -266,7 +266,7 @@ class Index
                                     layer.msg('修改失败');
                                     console.log(obj.value); //得到修改后的值
                                     console.log(obj.field); //当前编辑的字段名
-                                    console.log(obj.data); //所在行的所有相关数据 
+                                    console.log(obj.data); //所在行的所有相关数据
 
                                 }else if(msg.code == 1){
                                     layer.msg('[日期: '+ data.date +'] ' + field + ' 字段更改为：'+ value);
